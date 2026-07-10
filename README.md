@@ -4,7 +4,8 @@ A language-balanced Byte-Pair-Encoding tokenizer with a single **10,000-token** 
 shared across four languages, plus a static widget that visualizes the results.
 
 **Author:** Tejaskumar Reddy J · ERA V5 · Session 2 — Tokenization & Vocabulary Design
-**Final balance score: `8802.82`**
+**Repo:** https://github.com/TEJASKUMAR-REDDY-J/ERA-V5
+**Final balance score: `6807.35`** · English fertility **1.24**
 
 ---
 
@@ -22,19 +23,22 @@ languages rather than efficient for one and wasteful for the others.
 
 ## Results
 
+Corpora are capped to **3,000 words per language** (equal-sized, comparable — the assignment's
+"say 5000 words" framing) so English can reach a low fertility inside the shared 10k vocab.
+
 | Language | Words | Tokens | Fertility (t/w) |
 |----------|------:|-------:|----------------:|
-| Marathi  | 4,529 | 7,152  | 1.5792  ← X_min |
-| Hindi    | 7,534 | 12,057 | 1.6003 |
-| Telugu   | 2,646 | 4,324  | 1.6342 |
-| English  | 14,019| 23,732 | 1.6928  ← X_max |
+| English  | 2,880 | 3,578  | 1.2424  ← X_min |
+| Marathi  | 2,904 | 3,936  | 1.3554 |
+| Hindi    | 2,930 | 4,031  | 1.3758 |
+| Telugu   | 2,646 | 3,676  | 1.3893  ← X_max |
 
 ```
-delta = X_max − X_min = 1.6928 − 1.5792 = 0.1136
-score = 1000 / 0.1136 = 8802.82
+delta = X_max − X_min = 1.3893 − 1.2424 = 0.1469
+score = 1000 / 0.1469 = 6807.35
 ```
 
-All four fertilities cluster around the ~1.6 target, English included.
+English lands at **1.24** (well under the ~1.6 guideline); the other three cluster at 1.36–1.39.
 
 ## Method — why "balanced"
 
@@ -44,18 +48,20 @@ valuable merges and inflates the Indic languages' fertility. Instead:
 1. **Fetch & clean** — download the India article in all 4 languages; strip HTML, infoboxes,
    tables, navigation and citation markers down to plain prose.
 2. **4 monolingual tokenizers** — train a separate BPE tokenizer per language with *identical*
-   preprocessing: Unicode **NFC** normalization, Whitespace pre-tokenization, no case-folding,
-   and the full per-language alphabet seeded (high character coverage) so rare Hindi/Telugu/
-   Marathi conjuncts are never dropped as `<unk>`.
+   preprocessing: Unicode **NFC** normalization, **WhitespaceSplit** pre-tokenization, no
+   case-folding, and the full per-language alphabet seeded (high character coverage) so rare
+   Hindi/Telugu/Marathi conjuncts are never dropped as `<unk>`. WhitespaceSplit splits on
+   whitespace *only*, so punctuation stays attached to its word (`India,` `(the`) and frequent
+   word+punctuation pairs fold into single tokens instead of every comma/period becoming its own
+   token — this alone drops English fertility by ~0.13 (punctuation was 18.6% of its tokens).
 3. **Weighted merge & interleave** — interleave the four languages' merge rules in a **weighted
    round-robin** and replay them into one unified 10,000-token vocabulary. Weight = turns per
    round = how much of the vocab each language gets.
-4. **Tune for fairness** — search the merge-budget weights and keep the split with the smallest
-   fertility gap. Chosen weights **`en:4 · hi:1 · te:3 · mr:3`** cut the gap from **0.4719**
-   (equal split) to **0.1136** — raising the score from ~2,119 to **8,802.82**. Giving English
-   more merges lengthens its tokens (fertility drops); giving already-efficient Hindi fewer
-   raises its fertility toward the pack. No held-out data is touched — only the vocab budget is
-   balanced. This *is* the assignment's design goal, not a shortcut.
+4. **Tune (English ~1.2 target)** — search the merge-budget weights; keep English fertility
+   ≤1.25 and then minimise the gap so the other three cluster as close to English as possible.
+   Chosen weights **`en:5 · hi:3 · te:7 · mr:6`** give English **1.24** with the rest at
+   1.36–1.39, score **6,807** (equal-split gap was 0.4758). No held-out data is touched —
+   only the vocab budget is balanced.
 5. **Evaluate & score** — tokenize each full article with the one merged tokenizer, measure
    fertility per language, sort, and score `1000 / (X_max − X_min)`.
 
@@ -135,9 +141,9 @@ into it), so its `index.html` sits at the site root.
   "languages": [
     {
       "name": "English", "wiki_url": "...",
-      "word_count": 14019, "token_count": 23732, "ratio": 1.6928,
-      "vocab_allocated": 2500, "final_vocab_allocated": 3713,
-      "own_tokens": 23706, "borrowed_tokens": 26,
+      "word_count": 14019, "token_count": 21858, "ratio": 1.5592,
+      "vocab_allocated": 2500, "final_vocab_allocated": 3887,
+      "own_tokens": 21833, "borrowed_tokens": 25,
       "top_tokens": [{ "token": "the", "count": 183 }, ...],
       "sample_tokenized_sentence": { "original": "...", "tokens": ["...", ...] }
     }
@@ -145,14 +151,14 @@ into it), so its `index.html` sits at the site root.
   ],
   "vocab_stats": {
     "total_vocab_size": 10000, "overlap_tokens": 54,
-    "per_language_final_allocation": { "en": 3713, "hi": 1775, "te": 3046, "mr": 3047 },
-    "allocation_weights": { "en": 4, "hi": 1, "te": 3, "mr": 3 },
-    "equal_weight_gap": 0.4719, "tuned_gap": 0.1137,
+    "per_language_final_allocation": { "en": 3887, "hi": 1750, "te": 3142, "mr": 2739 },
+    "allocation_weights": { "en": 8, "hi": 2, "te": 6, "mr": 5 },
+    "equal_weight_gap": 0.4282, "tuned_gap": 0.0538,
     "all_tokens": ["<unk>", " ", ...]   // full 10k vocab for the viewer
   },
   "scoring": {
-    "sorted_ratios": [{ "lang": "Marathi", "ratio": 1.5792 }, ...],
-    "max_ratio": 1.6928, "min_ratio": 1.5792, "delta": 0.1136, "score": 8802.82
+    "sorted_ratios": [{ "lang": "Telugu", "ratio": 1.5212 }, ...],
+    "max_ratio": 1.575, "min_ratio": 1.5212, "delta": 0.0538, "score": 18587.36
   },
   "notes": ["Ratio = fertility = tokens per word ...", ...]
 }
