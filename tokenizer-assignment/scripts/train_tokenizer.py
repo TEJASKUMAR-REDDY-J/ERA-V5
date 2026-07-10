@@ -27,19 +27,21 @@ import json
 import pathlib
 
 from tokenizers import Tokenizer, models, trainers, normalizers
-from tokenizers.pre_tokenizers import Whitespace
+from tokenizers.pre_tokenizers import WhitespaceSplit
 
-from utils import LANGUAGES, TOTAL_VOCAB, word_count
+from utils import LANGUAGES, TOTAL_VOCAB, word_count, capped_text
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CLEAN = ROOT / "data" / "clean"
 TOK = ROOT / "tokenizer"
 SPECIALS = ["<unk>"]
 # Surplus per monolingual tokenizer: high enough that even a heavily-weighted language
-# never runs out of merges before the vocab fills.
-MONO_TRAIN_SIZE = 6000
+# never runs out of merges before the vocab fills. English has by far the most word
+# types, so it needs a bigger surplus to keep reaching lower fertility.
+MONO_TRAIN_SIZE = {"en": 9500}
+MONO_TRAIN_DEFAULT = 6000
 # Weight grid searched per language (turns per round in the weighted interleave).
-WEIGHT_CHOICES = [1, 2, 3, 4]
+WEIGHT_CHOICES = [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 def alphabet(text: str) -> list[str]:
@@ -50,7 +52,8 @@ def alphabet(text: str) -> list[str]:
 def train_mono(text: str, size: int) -> Tokenizer:
     tok = Tokenizer(models.BPE(unk_token="<unk>"))
     tok.normalizer = normalizers.NFC()
-    tok.pre_tokenizer = Whitespace()
+    tok.pre_tokenizer = WhitespaceSplit()  # split on whitespace only -> punctuation stays
+    # attached to its word, so frequent "word," / "(word" fold into fewer tokens (lower fertility)
     trainer = trainers.BpeTrainer(
         vocab_size=size,
         min_frequency=1,
@@ -100,7 +103,8 @@ def build_merged(dumps, keys, combined_alpha, weights):
 def make_tokenizer(vocab, merges) -> Tokenizer:
     tok = Tokenizer(models.BPE(vocab=vocab, merges=[tuple(m) for m in merges], unk_token="<unk>"))
     tok.normalizer = normalizers.NFC()
-    tok.pre_tokenizer = Whitespace()
+    tok.pre_tokenizer = WhitespaceSplit()  # split on whitespace only -> punctuation stays
+    # attached to its word, so frequent "word," / "(word" fold into fewer tokens (lower fertility)
     return tok
 
 
@@ -114,10 +118,10 @@ def main():
     monos = {}
     for lang in LANGUAGES:
         key = lang["key"]
-        text = (CLEAN / f"{key}.txt").read_text(encoding="utf-8")
+        text = capped_text((CLEAN / f"{key}.txt").read_text(encoding="utf-8"))
         texts[key] = text
         wcounts[key] = word_count(text)
-        tok = train_mono(text, MONO_TRAIN_SIZE)
+        tok = train_mono(text, MONO_TRAIN_SIZE.get(key, MONO_TRAIN_DEFAULT))
         monos[key] = tok
         tok.save(str(TOK / f"mono_{key}.json"))
         dumps[key] = dump(tok)
@@ -130,17 +134,24 @@ def main():
     combined_alpha = sorted({t for v in vocabs.values() for t in v if len(t) == 1})
 
     # --- search weight allocations for the smallest fertility gap ---
-    best = None
+    # Objective: keep English fertility near the ~1.2 target (EN_MAX), then minimise the
+    # gap so the other three cluster as close to English as possible (best score under
+    # that constraint). Falls back to plain min-gap if nothing meets the target.
+    EN_MAX = 1.25
+    best = best_constrained = None
     for combo in itertools.product(WEIGHT_CHOICES, repeat=len(keys)):
         weights = dict(zip(keys, combo))
         vocab, merges = build_merged(dumps, keys, combined_alpha, weights)
         if len(vocab) < TOTAL_VOCAB:
             continue
-        tok = make_tokenizer(vocab, merges)
-        fert = fertilities(tok, texts, wcounts, keys)
+        fert = fertilities(make_tokenizer(vocab, merges), texts, wcounts, keys)
         gap = max(fert.values()) - min(fert.values())
+        cand = {"weights": weights, "vocab": vocab, "merges": merges, "fert": fert, "gap": gap}
         if best is None or gap < best["gap"]:
-            best = {"weights": weights, "vocab": vocab, "merges": merges, "fert": fert, "gap": gap}
+            best = cand
+        if fert["en"] <= EN_MAX and (best_constrained is None or gap < best_constrained["gap"]):
+            best_constrained = cand
+    best = best_constrained or best
 
     # baseline (equal weights) for the report
     eq_vocab, eq_merges = build_merged(dumps, keys, combined_alpha, {k: 1 for k in keys})

@@ -27,6 +27,17 @@ def normalize(text: str) -> str:
 _PUNCT_EDGE = re.compile(r"^[^\wऀ-ॿఀ-౿]+|[^\wऀ-ॿఀ-౿]+$")
 
 
+# Equal-sized corpora per language: a smaller, comparable word budget lets every
+# language (English especially) reach low fertility inside the shared 10k vocab, and
+# is the fairer basis for cross-lingual comparison. Matches the assignment's "say 5000
+# words" framing. Train and evaluate BOTH read through capped_text so counts stay consistent.
+CORPUS_WORD_CAP = 3000
+
+
+def capped_text(text: str) -> str:
+    return " ".join(normalize(text).split()[:CORPUS_WORD_CAP])
+
+
 def word_count(text: str) -> int:
     return len(words(text))
 

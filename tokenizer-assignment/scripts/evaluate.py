@@ -16,7 +16,7 @@ from collections import Counter
 
 from tokenizers import Tokenizer
 
-from utils import LANGUAGES, VOCAB_PER_LANG, word_count, normalize
+from utils import LANGUAGES, VOCAB_PER_LANG, word_count, normalize, capped_text
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CLEAN = ROOT / "data" / "clean"
@@ -52,7 +52,7 @@ def main():
     languages = []
     for lang in LANGUAGES:
         k = lang["key"]
-        text = (CLEAN / f"{k}.txt").read_text(encoding="utf-8")
+        text = capped_text((CLEAN / f"{k}.txt").read_text(encoding="utf-8"))
         enc = merged.encode(text)
         toks = enc.tokens
         wc = word_count(text)
@@ -133,8 +133,11 @@ def main():
             "Trained and evaluated on the same corpus (the India Wikipedia pages) per "
             "assignment spec — fertility is optimistic vs. a held-out set.",
             "Identical preprocessing across languages: Unicode NFC normalization, "
-            "Whitespace pre-tokenization, no case-folding, full per-language alphabet "
-            "seeded (high character coverage) so rare Indic conjuncts are never <unk>.",
+            "WhitespaceSplit pre-tokenization (splits on whitespace only, so punctuation "
+            "stays attached to its word and frequent 'word,' / '(word' fold into fewer "
+            "tokens — this alone drops English fertility ~0.13), no case-folding, and the "
+            "full per-language alphabet seeded (high character coverage) so rare Indic "
+            "conjuncts are never <unk>.",
             "Word counts use one whitespace+punctuation rule for all four languages; "
             "Indic scripts have no intra-word spaces, so this is a consistent proxy.",
         ],

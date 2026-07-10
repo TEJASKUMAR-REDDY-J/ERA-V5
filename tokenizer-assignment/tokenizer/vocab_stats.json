@@ -1,6 +1,6 @@
 {
   "total_vocab_size": 10000,
-  "overlap_tokens": 54,
+  "overlap_tokens": 37,
   "shared_all_examples": [
     " ",
     "\"",
@@ -9,44 +9,46 @@
     "(",
     ")",
     "),",
-    ").",
     ",",
     "-",
     ".",
-    "/",
     ":",
     ";",
     "<unk>",
     "A",
-    "Ar",
-    "C",
     "I",
     "India",
-    "M",
     "R",
     "T",
-    "W",
     "a",
     "al",
     "b",
     "c",
-    "ch",
-    "d"
+    "d",
+    "e",
+    "f",
+    "h",
+    "i",
+    "l",
+    "n",
+    "o"
   ],
   "per_language_final_allocation": {
-    "en": 3713,
-    "hi": 1775,
-    "te": 3046,
-    "mr": 3047
+    "en": 2461,
+    "hi": 1906,
+    "te": 3525,
+    "mr": 3137
   },
   "allocation_weights": {
-    "en": 4,
-    "hi": 1,
-    "te": 3,
-    "mr": 3
+    "en": 5,
+    "hi": 3,
+    "te": 7,
+    "mr": 6
   },
-  "mono_train_size": 6000,
-  "final_merges": 9743,
-  "equal_weight_gap": 0.4719,
-  "tuned_gap": 0.1137
+  "mono_train_size": {
+    "en": 9500
+  },
+  "final_merges": 9764,
+  "equal_weight_gap": 0.4758,
+  "tuned_gap": 0.1469
 }
