@@ -4,6 +4,7 @@ A language-balanced Byte-Pair-Encoding tokenizer with a single **10,000-token** 
 shared across four languages, plus a static widget that visualizes the results.
 
 **Author:** Tejaskumar Reddy J · ERA V5 · Session 2 — Tokenization & Vocabulary Design
+**Repo:** https://github.com/TEJASKUMAR-REDDY-J/ERA-V5
 **Final balance score: `6807.35`** · English fertility **1.24**
 
 ---
