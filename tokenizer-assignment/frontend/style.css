@@ -159,6 +159,15 @@ details.tok .body { padding: 0 20px 20px; }
 .rt-verdict.ok { color: var(--lang-te); }
 .rt-verdict.bad { color: var(--max); }
 
+/* ---------- download button ---------- */
+.dl {
+  display: inline-block; margin-bottom: 12px; padding: 9px 16px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; text-decoration: none; color: #05070c;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.dl:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px var(--accent-2); }
+
 /* ---------- full vocab viewer ---------- */
 .vsearch {
   width: 100%; padding: 11px 14px; margin-bottom: 12px; border-radius: 10px;

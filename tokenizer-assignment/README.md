@@ -6,7 +6,7 @@ visualizes and lets a grader download/inspect the tokenizer.
 
 **Author:** Tejaskumar Reddy J · ERA V5 · Session 2 — Tokenization & Vocabulary Design
 **Repo:** https://github.com/TEJASKUMAR-REDDY-J/ERA-V5
-**Score: `4483.71`** · Hindi penalty **1.0×** · `decode(encode(text))` is faithful
+**Score: `4481.90`** · Hindi penalty **1.0×** · `decode(encode(text))` is exactly faithful (0 `[UNK]`, no normalizer)
 
 > This follows the ERA V5 Assignment 2 **reference solution**: faithful-Markdown corpus,
 > Metaspace BPE, and fertility measured against *faithful units* (not clipped word prose).
@@ -18,15 +18,15 @@ Unicode letter/mark/number run **or** one visible punctuation/symbol character.
 
 | Language | Tokens | Faithful units | Fertility |
 |----------|-------:|---------------:|----------:|
-| Hindi    | 51,275 | 88,359  | 0.580303  ← X_min |
-| English  | 114,739| 186,367 | 0.615662 |
-| Telugu   | 24,745 | 36,292  | 0.681831 |
-| Marathi  | 23,912 | 29,766  | 0.803333  ← X_max |
+| Hindi    | 51,270 | 88,359  | 0.580246  ← X_min |
+| English  | 114,772| 186,367 | 0.615839 |
+| Telugu   | 24,751 | 36,292  | 0.681996 |
+| Marathi  | 23,913 | 29,766  | 0.803366  ← X_max |
 
 ```
-spread = X_max − X_min = 0.803333 − 0.580303 = 0.223030
-raw score = 1000 / 0.223030 = 4483.71
-hindi_penalty = exp(max(0, 0.580303/1.2 − 1)) = 1.0   →  adjusted score = 4483.71
+spread = X_max − X_min = 0.803366 − 0.580246 = 0.223120
+raw score = 1000 / 0.223120 = 4481.90
+hindi_penalty = exp(max(0, 0.580246/1.2 − 1)) = 1.0   →  adjusted score = 4481.90
 ```
 
 All four ratios are under the 1.2 threshold. (Marathi's larger corpus makes it the most
@@ -39,10 +39,12 @@ efficient / highest-fertility language, which widens the spread vs. the tiny Mai
    references, image links, navboxes and categories are **kept**; only `script`/`style`/`meta`
    are stripped. This is a real document, not a clipped word list.
 2. **One shared BPE** — `train_tokenizer.py`: HuggingFace `BPE`, vocab **10,000**,
-   `min_frequency=1`, **NFKC** normalizer, **Metaspace** pre-tokenizer + decoder (`▁` space
-   marker). Metaspace preserves punctuation, brackets, URL characters, apostrophes and number
-   separators; it beats ByteLevel here because ByteLevel wastes tokens on UTF-8 bytes for Indic
-   scripts.
+   `min_frequency=1`, **Metaspace** pre-tokenizer + decoder (`▁` space marker), and **no
+   normalizer**. Metaspace preserves punctuation, brackets, URL characters, apostrophes and
+   number separators; it beats ByteLevel because ByteLevel wastes tokens on UTF-8 bytes for
+   Indic scripts. The NFKC normalizer from the reference is **dropped on purpose** — NFKC is
+   lossy (rewrites ligatures, superscripts, full-width forms) and would make
+   `decode(encode(text))` equal `NFKC(text)` instead of the raw text, failing the faithful gate.
 3. **Language weighting** — each corpus file is **duplicated** during training by its weight
    `{en:3, hi:4, te:4, mr:2}`, giving the smaller Indic pages fair influence on the shared merges.
 4. **Faithful-unit fertility & score** — `evaluate_tokenizer.py` counts faithful units with

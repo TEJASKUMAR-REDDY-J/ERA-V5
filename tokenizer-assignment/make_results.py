@@ -103,11 +103,13 @@ def main() -> int:
             "Corpus is a WIKI-FAITHFUL MARKDOWN conversion of the India Wikipedia page in each "
             "language (links, URLs, tables, references, image links, navboxes, categories kept) "
             "— not clipped article prose.",
-            "Tokenizer: HuggingFace BPE, 10,000 vocab, min_frequency=1, NFKC normalizer, "
-            "Metaspace pre-tokenizer/decoder (▁ space marker). Metaspace (not ByteLevel) so "
-            "Indic scripts don't waste tokens on UTF-8 bytes.",
-            "Faithfulness: decode(encode(text)) preserves every non-whitespace character — "
-            "punctuation, brackets, URLs, apostrophes and number separators all round-trip.",
+            "Tokenizer: HuggingFace BPE, 10,000 vocab, min_frequency=1, Metaspace "
+            "pre-tokenizer/decoder (▁ space marker), and NO normalizer. Metaspace (not "
+            "ByteLevel) keeps Indic scripts cheap; the normalizer is dropped because NFKC "
+            "is lossy and would break the round-trip on ligatures/superscripts/full-width forms.",
+            "Faithfulness: decode(encode(text)) reproduces every non-whitespace character "
+            "EXACTLY — punctuation, brackets, URLs, apostrophes and number separators all "
+            "round-trip, with zero [UNK] across the whole corpus.",
             f"Language training weights (corpus duplication): {WEIGHTS}.",
             "Score = 1000 / (max_fertility - min_fertility). A Hindi penalty "
             "exp(max(0, hindi/1.2 - 1)) applies only if Hindi exceeds 1.2; here it is 1.0.",
@@ -119,6 +121,9 @@ def main() -> int:
     for code, _ in LANGS:
         (FRONTEND / f"tokens_{code}.json").write_text(
             (RESULTS / f"tokens_{code}.json").read_text(encoding="utf-8"), encoding="utf-8")
+    # ship the tokenizer into frontend/ so the widget's download button works standalone
+    (FRONTEND / "tokenizer.json").write_text(
+        (ROOT / "tokenizer.json").read_text(encoding="utf-8"), encoding="utf-8")
 
     print(f"score={score}  ratios={ranked}  roundtrip_ok={preserves}")
     return 0

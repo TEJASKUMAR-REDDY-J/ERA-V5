@@ -21,17 +21,17 @@
   },
   "unit_policy": "Counts each contiguous Unicode letter/mark/number run as one unit and each visible non-space punctuation/symbol character as one unit.",
   "token_counts": {
-    "en": 114739,
-    "hi": 51275,
-    "te": 24745,
-    "mr": 23912
+    "en": 114772,
+    "hi": 51270,
+    "te": 24751,
+    "mr": 23913
   },
   "ratios": {
-    "en": 0.6156615709862797,
-    "hi": 0.5803030817460587,
-    "te": 0.6818307064917888,
-    "mr": 0.8033326614257879
+    "en": 0.6158386409611144,
+    "hi": 0.5802464944148304,
+    "te": 0.6819960321834013,
+    "mr": 0.803366256803064
   },
-  "spread": 0.22302957967972914,
-  "score": 4483.710194118653
+  "spread": 0.2231197623882335,
+  "score": 4481.89792466692
 }

@@ -45,7 +45,7 @@ function methodology(d) {
   const w = d.vocab_stats.weights || {};
   const steps = [
     ["Faithful Markdown corpus", "Fetched the <b>India</b> article via the Wikipedia REST HTML API for English, Hindi, Telugu and Marathi and converted each to <b>faithful Markdown</b> (markdownify). Links, URLs, tables, references, image links, navboxes and categories are <i>kept</i> — only scripts/styles/meta are removed. This is a real document, not clipped word prose."],
-    ["One shared BPE tokenizer", "Trained a single HuggingFace <b>BPE</b> tokenizer, vocab <b>10,000</b>, <code>min_frequency=1</code>, <b>NFKC</b> normalizer, <b>Metaspace</b> pre-tokenizer + decoder (▁ space marker). Metaspace preserves punctuation, brackets, URL characters, apostrophes and number separators; it's chosen over ByteLevel so Indic scripts don't waste tokens on UTF-8 bytes."],
+    ["One shared BPE tokenizer", "Trained a single HuggingFace <b>BPE</b> tokenizer, vocab <b>10,000</b>, <code>min_frequency=1</code>, <b>Metaspace</b> pre-tokenizer + decoder (▁ space marker), and <b>no normalizer</b>. Metaspace preserves punctuation, brackets, URL characters, apostrophes and number separators; it beats ByteLevel because Indic scripts don't waste tokens on UTF-8 bytes. The normalizer is dropped on purpose — NFKC is lossy and would break the exact round-trip."],
     ["Language weighting", `Balanced the four languages by <b>duplicating each corpus</b> during training — weights <code>en:${w.en} · hi:${w.hi} · te:${w.te} · mr:${w.mr}</code> — so the smaller Indic pages get fair influence over the shared merges.`],
     ["Faithful-unit fertility", "Defined a <b>faithful unit</b> = one contiguous Unicode letter/mark/number run OR one visible punctuation/symbol. <b>fertility = tokens ÷ faithful units</b> — a denominator that counts everything the tokenizer must reproduce, so you can't cheat by dropping punctuation."],
     ["Faithfulness &amp; score", "Verified <code>decode(encode(text))</code> preserves every non-whitespace character (punctuation, URLs, number separators round-trip). Scored <code>1000 / (X_max − X_min)</code>, with a Hindi penalty <code>exp(max(0, hindi/1.2 − 1))</code> that only bites if Hindi fertility exceeds 1.2."],
@@ -81,7 +81,7 @@ function codeFlow() {
   const tree =
 `tokenizer-assignment/
 ├── build_wiki_faithful_markdown.py   fetch Wikipedia REST HTML → faithful Markdown
-├── train_tokenizer.py                train the shared 10k BPE (NFKC + Metaspace)
+├── train_tokenizer.py                train the shared 10k BPE (Metaspace, no normalizer)
 ├── evaluate_tokenizer.py             faithful-unit fertility + score
 ├── make_results.py                   build results.json for the widget
 ├── tokenizer.json                    the trained tokenizer (inspectable/downloadable)
@@ -111,7 +111,7 @@ function codeFlow() {
   const codeSnips = [
     ["train_tokenizer.py — the tokenizer (faithful, Metaspace)",
 `tok = Tokenizer(BPE(unk_token="[UNK]"))
-tok.normalizer   = NFKC()
+# NO normalizer — NFKC is lossy and would break the faithful round-trip
 tok.pre_tokenizer = Metaspace(replacement="▁", prepend_scheme="never")
 tok.decoder       = Metaspace(replacement="▁", prepend_scheme="never")
 # weight by duplicating each corpus file: en×3, hi×4, te×4, mr×2
@@ -245,6 +245,7 @@ function vocabList(d) {
   const all = d.vocab_stats.all_tokens || [];
   return `<h2 class="section">Full tokenizer vocabulary — ${all.length.toLocaleString()} tokens</h2>
     <div class="chart">
+      <a class="dl" href="tokenizer.json" download="tokenizer.json">⤓ Download tokenizer.json</a>
       <input id="vocab-search" class="vsearch" type="search"
         placeholder="Search all ${all.length.toLocaleString()} tokens (e.g. भारत, the, ా)…" />
       <div id="vocab-count" class="caption"></div>

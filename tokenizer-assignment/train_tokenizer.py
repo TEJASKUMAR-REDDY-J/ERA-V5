@@ -16,7 +16,6 @@ import regex
 from tokenizers import Tokenizer
 from tokenizers.decoders import Metaspace as MetaspaceDecoder
 from tokenizers.models import BPE
-from tokenizers.normalizers import NFKC
 from tokenizers.pre_tokenizers import Metaspace
 from tokenizers.trainers import BpeTrainer
 
@@ -36,8 +35,11 @@ def faithful_units(text: str) -> int:
 
 
 def make_tokenizer() -> Tokenizer:
+    # No normalizer: NFKC is lossy (it rewrites ligatures, superscripts, full-width forms,
+    # etc.), so decode(encode(text)) would equal NFKC(text), not the raw text, and fail the
+    # faithful round-trip gate. With no normalizer the pipeline is Metaspace-only, which is
+    # exactly reversible for non-whitespace characters.
     tokenizer = Tokenizer(BPE(unk_token="[UNK]"))
-    tokenizer.normalizer = NFKC()
     tokenizer.pre_tokenizer = Metaspace(replacement="▁", prepend_scheme="never")
     tokenizer.decoder = MetaspaceDecoder(replacement="▁", prepend_scheme="never")
     return tokenizer
