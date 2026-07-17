@@ -18,23 +18,23 @@ async function fetchFirst(paths) {
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const showWS = (t) => esc(t).replace(/ /g, '<span class="ws">·</span>');
+// Metaspace uses ▁ for a leading space; render it (and literal spaces) as a faint dot.
+const showWS = (t) => esc(t).replace(/[ ▁]/g, '<span class="ws">·</span>');
 const lvar = (name) => `var(${VAR[name] || "--accent"})`;
 
 /* ---------------- hero ---------------- */
 function hero(d) {
-  const s = d.scoring, v = d.vocab_stats;
-  const eqScore = v.equal_weight_gap ? Math.round(1000 / v.equal_weight_gap) : null;
-  const badge = (v.equal_weight_gap && v.tuned_gap)
-    ? `<div class="improve">Fertility gap tuned <b>${v.equal_weight_gap} → ${v.tuned_gap}</b>
-        &nbsp;·&nbsp; score <b>${eqScore?.toLocaleString()} → ${s.score?.toLocaleString()}</b></div>`
+  const s = d.scoring, rt = d.roundtrip;
+  const badge = rt
+    ? `<div class="improve">✓ Faithful — <b>decode(encode(text))</b> preserves every visible character
+        &nbsp;·&nbsp; Hindi penalty <b>${s.hindi_penalty_factor}×</b></div>`
     : "";
   return `<section class="hero">
-    <p class="eyebrow">Language-Balanced BPE · 10,000 tokens · EN · HI · TE · MR</p>
+    <p class="eyebrow">Wiki-Faithful BPE · 10,000 tokens · EN · HI · TE · MR</p>
     <h1>India — Wikipedia in 4 Languages</h1>
     <div class="byline">by <b>Tejaskumar Reddy J</b></div>
     <div class="score">${s.score?.toLocaleString() ?? "—"}</div>
-    <div class="score-label">Balance Score = 1000 / (X_max − X_min)</div>
+    <div class="score-label">Balance Score = 1000 / (X_max − X_min) &nbsp;·&nbsp; fertility = tokens ÷ faithful units</div>
     <div class="score-formula">= 1000 / (${s.max_ratio} − ${s.min_ratio}) = 1000 / ${s.delta}</div>
     ${badge}
   </section>`;
@@ -42,19 +42,30 @@ function hero(d) {
 
 /* ---------------- methodology (main page explainer) ---------------- */
 function methodology(d) {
-  const v = d.vocab_stats;
-  const w = v.allocation_weights || {};
+  const w = d.vocab_stats.weights || {};
   const steps = [
-    ["Fetch &amp; clean", "Pulled the <b>India</b> article from English, Hindi, Telugu and Marathi Wikipedia. Stripped HTML, infoboxes, tables, navigation and citation markers down to plain article prose."],
-    ["4 monolingual tokenizers", "Trained a separate BPE tokenizer on each language with <i>identical</i> preprocessing: Unicode NFC normalization, <b>WhitespaceSplit</b> pre-tokenization (punctuation stays attached to its word, so frequent <code>word,</code> / <code>(word</code> fold into fewer tokens — dropping fertility), no case-folding, and the full per-language alphabet seeded so rare Indic conjuncts are never dropped as <code>&lt;unk&gt;</code>."],
-    ["Weighted merge &amp; interleave", "Interleaved the four languages' merge rules in a <b>weighted round-robin</b> and replayed them into one unified <b>10,000-token</b> vocabulary — so English's larger byte volume can't monopolise the merges."],
-    ["Tune for fairness", `Searched the merge-budget weights and kept the split with the smallest <b>fertility gap</b>. Chosen weights <code>en:${w.en} · hi:${w.hi} · te:${w.te} · mr:${w.mr}</code> cut the gap from <b>${v.equal_weight_gap}</b> (equal split) to <b>${v.tuned_gap}</b>. No held-out data touched — only the vocab budget is balanced.`],
-    ["Evaluate &amp; score", "Tokenized each full article with the one merged tokenizer, measured <b>fertility = tokens ÷ words</b> per language, sorted them, and scored <code>1000 / (X_max − X_min)</code>. A smaller gap ⇒ fairer tokenizer ⇒ higher score."],
+    ["Faithful Markdown corpus", "Fetched the <b>India</b> article via the Wikipedia REST HTML API for English, Hindi, Telugu and Marathi and converted each to <b>faithful Markdown</b> (markdownify). Links, URLs, tables, references, image links, navboxes and categories are <i>kept</i> — only scripts/styles/meta are removed. This is a real document, not clipped word prose."],
+    ["One shared BPE tokenizer", "Trained a single HuggingFace <b>BPE</b> tokenizer, vocab <b>10,000</b>, <code>min_frequency=1</code>, <b>NFKC</b> normalizer, <b>Metaspace</b> pre-tokenizer + decoder (▁ space marker). Metaspace preserves punctuation, brackets, URL characters, apostrophes and number separators; it's chosen over ByteLevel so Indic scripts don't waste tokens on UTF-8 bytes."],
+    ["Language weighting", `Balanced the four languages by <b>duplicating each corpus</b> during training — weights <code>en:${w.en} · hi:${w.hi} · te:${w.te} · mr:${w.mr}</code> — so the smaller Indic pages get fair influence over the shared merges.`],
+    ["Faithful-unit fertility", "Defined a <b>faithful unit</b> = one contiguous Unicode letter/mark/number run OR one visible punctuation/symbol. <b>fertility = tokens ÷ faithful units</b> — a denominator that counts everything the tokenizer must reproduce, so you can't cheat by dropping punctuation."],
+    ["Faithfulness &amp; score", "Verified <code>decode(encode(text))</code> preserves every non-whitespace character (punctuation, URLs, number separators round-trip). Scored <code>1000 / (X_max − X_min)</code>, with a Hindi penalty <code>exp(max(0, hindi/1.2 − 1))</code> that only bites if Hindi fertility exceeds 1.2."],
   ];
   const li = steps.map(([h, b], i) =>
     `<div class="step"><div class="n">${i + 1}</div><div><h4>${h}</h4><p>${b}</p></div></div>`).join("");
   return `<h2 class="section">How we built this</h2>
-    <div class="method">${li}</div>`;
+    <div class="method">${li}</div>` + roundtripCard(d);
+}
+
+function roundtripCard(d) {
+  const rt = d.roundtrip; if (!rt) return "";
+  return `<h2 class="section">Faithfulness — round-trip check</h2>
+    <div class="chart">
+      <div class="subhead">decode(encode(text)) must preserve every visible character</div>
+      <div class="rt-row"><span class="rt-k">input</span><code class="rt-v">${esc(rt.original)}</code></div>
+      <div class="rt-row"><span class="rt-k">decoded</span><code class="rt-v">${esc(rt.decoded)}</code></div>
+      <div class="rt-verdict ${rt.preserves_visible ? "ok" : "bad"}">
+        ${rt.preserves_visible ? "✓ identical non-whitespace characters — faithful" : "✗ visible characters changed"}</div>
+    </div>`;
 }
 
 /* ---------------- top-level nav ---------------- */
@@ -69,49 +80,47 @@ const view = (id, html, active) => `<div class="view${active ? " active" : ""}" 
 function codeFlow() {
   const tree =
 `tokenizer-assignment/
-├── data/
-│   ├── raw/            raw Wikipedia HTML per language
-│   └── clean/          cleaned plain-text article per language
-├── scripts/
-│   ├── fetch_data.py       fetch + clean the 4 Wikipedia pages
-│   ├── train_tokenizer.py  train 4 mono BPEs, weighted-merge to 10k, tune
-│   ├── evaluate.py         fertility ratios + score  ->  results.json
-│   └── utils.py            shared config, NFC, word split
-├── tokenizer/
-│   ├── merged_vocab.json   final 10k tokenizer (inspectable)
-│   └── mono_*.json         the 4 monolingual tokenizers
-├── results/
-│   ├── results.json        structured output the frontend reads
-│   └── tokens_*.json       full ordered token stream per language
-└── frontend/           this static site (HTML/CSS/JS, Netlify-ready)`;
-  const flow = ["fetch_data.py", "clean text", "train_tokenizer.py", "4 monolingual BPEs",
-    "weighted round-robin merge", "tune allocation → min gap", "merged_vocab.json",
-    "evaluate.py", "results.json", "frontend"];
+├── build_wiki_faithful_markdown.py   fetch Wikipedia REST HTML → faithful Markdown
+├── train_tokenizer.py                train the shared 10k BPE (NFKC + Metaspace)
+├── evaluate_tokenizer.py             faithful-unit fertility + score
+├── make_results.py                   build results.json for the widget
+├── tokenizer.json                    the trained tokenizer (inspectable/downloadable)
+├── metrics.json                      saved metrics
+├── corpus/
+│   ├── {en,hi,te,mr}.faithful.md    faithful Markdown snapshots
+│   ├── {en,hi,te,mr}.faithful.txt   same corpus, plain text (tokenizer input)
+│   └── {en,hi,te,mr}.meta.json      corpus metadata
+├── results/  results.json + tokens_*.json  (widget data)
+└── frontend/ this static site (HTML/CSS/JS, Netlify-ready)`;
+  const flow = ["build_wiki_faithful_markdown.py", "corpus/*.faithful.txt", "train_tokenizer.py",
+    "tokenizer.json (10k, Metaspace)", "evaluate_tokenizer.py", "faithful-unit fertility",
+    "score 6502.56", "make_results.py", "frontend"];
   const chips = flow.map((f) => `<span class="flow-node">${esc(f)}</span>`).join('<span class="flow-arrow">→</span>');
 
-  // the three commands that reproduce everything, shown as a mac terminal session
   const term = macTerm("tejaskumar — python — 80×24", [
     `<span class="c-cmt"># reproduce the whole pipeline end to end</span>`,
-    `<span class="c-usr">tejaskumar@era-v5</span>:<span class="c-dir">~/tokenizer-assignment</span>$ python scripts/fetch_data.py`,
-    `<span class="c-out">English (en): 14,019 words · Hindi 7,534 · Telugu 2,646 · Marathi 4,529</span>`,
-    `<span class="c-usr">tejaskumar@era-v5</span>:<span class="c-dir">~/tokenizer-assignment</span>$ python scripts/train_tokenizer.py`,
-    `<span class="c-out">Best-weight gap: 0.1137  score=8795.9  weights={en:4, hi:1, te:3, mr:3}</span>`,
-    `<span class="c-usr">tejaskumar@era-v5</span>:<span class="c-dir">~/tokenizer-assignment</span>$ python scripts/evaluate.py</span>`,
-    `<span class="c-out">X_max=1.6928  X_min=1.5792  delta=0.1136  <span class="c-ok">SCORE=8802.82</span></span>`,
+    `<span class="c-usr">tejaskumar@era-v5</span>:<span class="c-dir">~/tokenizer-assignment</span>$ python build_wiki_faithful_markdown.py`,
+    `<span class="c-out">en English: 186,367 faithful units · hi 88,359 · te 36,292 · mr 29,766</span>`,
+    `<span class="c-usr">tejaskumar@era-v5</span>:<span class="c-dir">~/tokenizer-assignment</span>$ python train_tokenizer.py</span>`,
+    `<span class="c-out">weights={en:3, hi:4, te:4, mr:2}  vocab=10000</span>`,
+    `<span class="c-usr">tejaskumar@era-v5</span>:<span class="c-dir">~/tokenizer-assignment</span>$ python evaluate_tokenizer.py</span>`,
+    `<span class="c-out">spread=0.223030  <span class="c-ok">score=4483.71</span>  hindi_penalty=1.0</span>`,
     `<span class="c-usr">tejaskumar@era-v5</span>:<span class="c-dir">~/tokenizer-assignment</span>$ <span class="cursor">▋</span>`,
   ].join("\n"));
 
   const codeSnips = [
-    ["train_tokenizer.py — weighted round-robin merge (the balancing core)",
-`while len(vocab) < TOTAL_VOCAB:
-    for k in keys:                 # en, hi, te, mr
-        for _ in range(weights[k]):    # more turns = more merges = lower fertility
-            a, b = next_applicable_merge(k)
-            vocab[a + b] = len(vocab)  # grow the shared 10k vocab`],
-    ["evaluate.py — fertility &amp; score",
-`ratio = token_count / word_count        # fertility: tokens per word
-sorted_ratios = sorted(ratios)
-score = 1000 / (max(ratios) - min(ratios))   # smaller gap -> higher score`],
+    ["train_tokenizer.py — the tokenizer (faithful, Metaspace)",
+`tok = Tokenizer(BPE(unk_token="[UNK]"))
+tok.normalizer   = NFKC()
+tok.pre_tokenizer = Metaspace(replacement="▁", prepend_scheme="never")
+tok.decoder       = Metaspace(replacement="▁", prepend_scheme="never")
+# weight by duplicating each corpus file: en×3, hi×4, te×4, mr×2
+tok.train(files, BpeTrainer(vocab_size=10000, min_frequency=1))`],
+    ["evaluate_tokenizer.py — faithful units, fertility &amp; score",
+`FAITHFUL_UNIT_RE = regex.compile(r"[\\p{L}\\p{M}\\p{N}]+|[^\\s\\p{L}\\p{M}\\p{N}]")
+ratio = tokens / faithful_units          # denominator counts every visible symbol
+score = 1000 / (max(ratios) - min(ratios))
+hindi_penalty = exp(max(0, hindi/1.2 - 1))   # 1.0 while Hindi < 1.2`],
   ].map(([t, code]) =>
     `<div class="subhead" style="margin-top:22px">${t}</div>` + macTerm(t.split(" —")[0], `<span class="code">${esc(code)}</span>`, true)).join("");
 
@@ -153,11 +162,11 @@ function chart(d) {
       <div class="val">${r.ratio.toFixed(4)}</div>
     </div>`;
   }).join("");
-  return `<h2 class="section">Fertility (tokens / word) — sorted</h2>
+  return `<h2 class="section">Fertility (tokens / faithful unit) — sorted</h2>
     <div class="chart">${rows}
-    <div class="caption">Lower fertility = fewer tokens per word = more efficient.
-    All four now sit between ${ranked[0].ratio} and ${ranked[ranked.length - 1].ratio} — a tight spread
-    (X_max ${esc(maxLang)}, X_min ${esc(minLang)}) is exactly what drives a high score.</div></div>`;
+    <div class="caption">Fertility = tokens ÷ faithful units; all four are below the 1.2 threshold
+    (${ranked[0].ratio}–${ranked[ranked.length - 1].ratio}). The tight spread between X_max (${esc(maxLang)})
+    and X_min (${esc(minLang)}) is what drives the score = 1000 / (${d.scoring.max_ratio} − ${d.scoring.min_ratio}).</div></div>`;
 }
 
 /* ---------------- per-language tabs ---------------- */
@@ -186,14 +195,12 @@ function langPanel(l, active) {
       <a class="wiki" href="${esc(l.wiki_url)}" target="_blank" rel="noopener">source article ↗</a>
     </div>
     <div class="metrics wide">
-      ${metric(l.word_count.toLocaleString(), "words")}
+      ${metric(l.faithful_units.toLocaleString(), "faithful units")}
       ${metric(l.token_count.toLocaleString(), "tokens")}
-      ${metric(l.ratio.toFixed(4), "fertility (t/w)")}
-      ${metric((l.final_vocab_allocated ?? l.vocab_allocated).toLocaleString(), "vocab in final 10k")}
-      ${metric(l.own_tokens.toLocaleString(), "own-vocab tokens")}
-      ${metric(l.borrowed_tokens.toLocaleString(), "borrowed tokens")}
+      ${metric(l.ratio.toFixed(4), "fertility (tok / unit)")}
+      ${metric(l.weight + "×", "training weight")}
     </div>
-    <div class="subhead">Sample sentence — tokenized (${s.tokens.length} tokens)</div>
+    <div class="subhead">Sample line — tokenized (${s.tokens.length} tokens · ▁ = space)</div>
     <div class="orig">"${esc(s.original)}"</div>
     <div class="chips">${chips}</div>
     <div class="subhead">Top 30 tokens in this article</div>
@@ -216,15 +223,16 @@ async function loadStream(name) {
   let toks;
   try { toks = await fetchFirst(tokenPaths(KEY[name])); }
   catch (e) { count.textContent = "could not load full stream (" + e.message + ")"; return; }
+  const CAP = 4000;  // faithful corpora are big (English ~111k tokens) — cap the DOM
   const draw = () => {
     const q = search.value.trim().toLowerCase();
     const hits = q ? toks.filter((t) => t.toLowerCase().includes(q)) : toks;
-    grid.innerHTML = hits.map((t, i) =>
+    grid.innerHTML = hits.slice(0, CAP).map((t, i) =>
       `<span class="chip" style="background:${CHIP_COLORS[i % CHIP_COLORS.length]}18;
         border-color:${CHIP_COLORS[i % CHIP_COLORS.length]}44">${showWS(t)}</span>`).join("");
     count.textContent = q
-      ? `${hits.length.toLocaleString()} match "${q}"`
-      : `${toks.length.toLocaleString()} tokens total — all shown, in order; search to filter`;
+      ? `${hits.length.toLocaleString()} match "${q}"` + (hits.length > CAP ? ` (showing ${CAP.toLocaleString()})` : "")
+      : `${toks.length.toLocaleString()} tokens total — showing first ${Math.min(CAP, toks.length).toLocaleString()}, in order; search to filter`;
   };
   search.addEventListener("input", draw);
   draw();
@@ -261,14 +269,15 @@ function renderVocab(all) {
 
 /* ---------------- notes ---------------- */
 function notes(d) {
-  const v = d.vocab_stats;
+  const v = d.vocab_stats, s = d.scoring;
   const li = d.notes.map((n) => `<li>${esc(n)}</li>`).join("");
-  const alloc = Object.entries(v.per_language_final_allocation).map(([k, n]) => `${k}: ${n}`).join(" · ");
+  const w = v.weights || {};
   return `<h2 class="section">Methodology &amp; caveats</h2>
     <div class="notes"><ul>${li}</ul>
-    <div class="vocab-line">Final unified vocab: <b>${v.total_vocab_size.toLocaleString()}</b> tokens ·
-      overlap shared by all 4 languages: <b>${v.overlap_tokens}</b> ·
-      final contribution — ${alloc}</div></div>`;
+    <div class="vocab-line">Shared vocab: <b>${v.total_vocab_size.toLocaleString()}</b> tokens ·
+      weights en:${w.en} · hi:${w.hi} · te:${w.te} · mr:${w.mr} ·
+      raw score <b>${s.score.toLocaleString()}</b> · Hindi-adjusted <b>${s.hindi_adjusted_score?.toLocaleString()}</b>
+      (penalty ${s.hindi_penalty_factor}×)</div></div>`;
 }
 
 /* ---------------- wire up ---------------- */

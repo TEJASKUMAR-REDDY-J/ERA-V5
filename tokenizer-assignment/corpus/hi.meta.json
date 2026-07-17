@@ -1,0 +1,10 @@
+{
+  "lang": "hi",
+  "title": "भारत",
+  "source_url": "https://hi.wikipedia.org/api/rest_v1/page/html/%E0%A4%AD%E0%A4%BE%E0%A4%B0%E0%A4%A4",
+  "variant": "wiki_faithful_markdown",
+  "generated_at": "2026-07-13T12:02:11Z",
+  "chars": 266728,
+  "faithful_units": 88359,
+  "unit_policy": "Counts each contiguous Unicode letter/mark/number run as one unit and each visible non-space punctuation/symbol character as one unit."
+}

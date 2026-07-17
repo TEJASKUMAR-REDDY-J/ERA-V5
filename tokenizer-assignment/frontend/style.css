@@ -150,6 +150,15 @@ details.tok .body { padding: 0 20px 20px; }
   padding: 3px 9px; font-size: 13px; font-family: ui-monospace, monospace; }
 .toptok b { color: var(--accent); margin-left: 6px; font-weight: 700; }
 
+/* ---------- round-trip faithfulness ---------- */
+.rt-row { display: grid; grid-template-columns: 78px 1fr; gap: 12px; align-items: start; margin: 8px 0; }
+.rt-k { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); padding-top: 6px; }
+.rt-v { display: block; background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 12px; font-family: ui-monospace, monospace; font-size: 13px; overflow-x: auto; }
+.rt-verdict { margin-top: 12px; font-weight: 700; }
+.rt-verdict.ok { color: var(--lang-te); }
+.rt-verdict.bad { color: var(--max); }
+
 /* ---------- full vocab viewer ---------- */
 .vsearch {
   width: 100%; padding: 11px 14px; margin-bottom: 12px; border-radius: 10px;
