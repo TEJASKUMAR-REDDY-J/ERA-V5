@@ -1,0 +1,4 @@
+# regenerate with proxy/build_corpus.py (~72MB of tokenized pools)
+proxy/pools/
+__pycache__/
+*.pyc

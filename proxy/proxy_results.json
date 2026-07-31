@@ -1,0 +1,164 @@
+{
+  "arms": [
+    {
+      "arm": "indic06",
+      "shares": {
+        "web": 0.69,
+        "indic": 0.06,
+        "code": 0.25
+      },
+      "params": 3748992,
+      "steps": 500,
+      "tokens_seen": 3072000,
+      "train_s": 1172.5,
+      "eval": {
+        "web": {
+          "loss_nats_per_token": 5.3288,
+          "bits_per_char": 2.8103,
+          "ppl": 206.2
+        },
+        "indic": {
+          "loss_nats_per_token": 6.4165,
+          "bits_per_char": 3.7143,
+          "ppl": 611.86
+        },
+        "code": {
+          "loss_nats_per_token": 4.7516,
+          "bits_per_char": 3.6254,
+          "ppl": 115.77
+        }
+      }
+    },
+    {
+      "arm": "indic16",
+      "shares": {
+        "web": 0.59,
+        "indic": 0.16,
+        "code": 0.25
+      },
+      "params": 3748992,
+      "steps": 500,
+      "tokens_seen": 3072000,
+      "train_s": 1494.7,
+      "eval": {
+        "web": {
+          "loss_nats_per_token": 5.4607,
+          "bits_per_char": 2.8798,
+          "ppl": 235.26
+        },
+        "indic": {
+          "loss_nats_per_token": 5.872,
+          "bits_per_char": 3.3991,
+          "ppl": 354.96
+        },
+        "code": {
+          "loss_nats_per_token": 4.7885,
+          "bits_per_char": 3.6536,
+          "ppl": 120.12
+        }
+      }
+    },
+    {
+      "arm": "indic24",
+      "shares": {
+        "web": 0.51,
+        "indic": 0.24,
+        "code": 0.25
+      },
+      "params": 3748992,
+      "steps": 500,
+      "tokens_seen": 3072000,
+      "train_s": 1416.8,
+      "eval": {
+        "web": {
+          "loss_nats_per_token": 5.4999,
+          "bits_per_char": 2.9005,
+          "ppl": 244.67
+        },
+        "indic": {
+          "loss_nats_per_token": 5.6844,
+          "bits_per_char": 3.2906,
+          "ppl": 294.25
+        },
+        "code": {
+          "loss_nats_per_token": 4.8306,
+          "bits_per_char": 3.6858,
+          "ppl": 125.29
+        }
+      }
+    },
+    {
+      "arm": "indic34",
+      "shares": {
+        "web": 0.41,
+        "indic": 0.34,
+        "code": 0.25
+      },
+      "params": 3748992,
+      "steps": 500,
+      "tokens_seen": 3072000,
+      "train_s": 1051.7,
+      "eval": {
+        "web": {
+          "loss_nats_per_token": 5.4035,
+          "bits_per_char": 2.8497,
+          "ppl": 222.18
+        },
+        "indic": {
+          "loss_nats_per_token": 5.4321,
+          "bits_per_char": 3.1445,
+          "ppl": 228.62
+        },
+        "code": {
+          "loss_nats_per_token": 4.6459,
+          "bits_per_char": 3.5448,
+          "ppl": 104.16
+        }
+      }
+    },
+    {
+      "arm": "indic34_s1",
+      "shares": {
+        "web": 0.41,
+        "indic": 0.34,
+        "code": 0.25
+      },
+      "params": 3748992,
+      "steps": 500,
+      "tokens_seen": 3072000,
+      "train_s": 1060.9,
+      "eval": {
+        "web": {
+          "loss_nats_per_token": 5.4534,
+          "bits_per_char": 2.876,
+          "ppl": 233.56
+        },
+        "indic": {
+          "loss_nats_per_token": 5.444,
+          "bits_per_char": 3.1514,
+          "ppl": 231.36
+        },
+        "code": {
+          "loss_nats_per_token": 4.7049,
+          "bits_per_char": 3.5899,
+          "ppl": 110.49
+        }
+      }
+    }
+  ],
+  "config": {
+    "block": 256,
+    "batch": 24,
+    "layers": 4,
+    "heads": 4,
+    "d_model": 192,
+    "steps": 500,
+    "code_share": 0.25,
+    "chars_per_token": {
+      "web": 2.736,
+      "indic": 2.492,
+      "code": 1.891
+    },
+    "tokenizer": "Session 2 wiki-faithful 10k BPE"
+  }
+}
