@@ -1,0 +1,43 @@
+{
+  "anneal_reserve": false,
+  "cleaning_counters": {},
+  "cleaning_pipeline_hash": "599cbcf7933e50500a8f862229f260e3adfdaaa6216ad87adef6d0a1d119342d",
+  "contamination_status": "is_benchmark",
+  "content_hash": "81165d2d45aa9e58c813e4ffe77046925cee8b729f65fb40bc68bb86688ae544",
+  "dedup_status": "n/a",
+  "document_ids": [
+    "eval-gsm-0000",
+    "eval-gsm-0001",
+    "eval-gsm-0002",
+    "eval-gsm-0003",
+    "eval-gsm-0004",
+    "eval-gsm-0005",
+    "eval-gsm-0006",
+    "eval-gsm-0007",
+    "eval-gsm-0008",
+    "eval-gsm-0009",
+    "eval-gsm-0010",
+    "eval-gsm-0011",
+    "eval-gsm-0012",
+    "eval-gsm-0013",
+    "eval-gsm-0014",
+    "eval-gsm-0015"
+  ],
+  "eval_overlap": true,
+  "kind": "stream",
+  "lane": "eval",
+  "language": "en",
+  "license": "eval-only",
+  "never_train": true,
+  "parent_shard_ids": [],
+  "pii_status": "n/a",
+  "provenance_tier": "E",
+  "script": "Latin",
+  "shard_id": "eval-holdout-000-81165d2d45aa",
+  "source_ids": [
+    "openai/gsm8k:main:test"
+  ],
+  "token_count": 4133,
+  "tokenizer_hash": "358592476e854961fc96cfd13f5e3a73c27e4c5d89de7508ea1145c552103c87",
+  "tokenizer_id": "s2-wiki-faithful-bpe-10k"
+}

@@ -1,0 +1,159 @@
+{
+  "generated_by": "v5flow.evidence.verify",
+  "note": "Every result recomputed from artifacts on disk; no value is hardcoded.",
+  "requirements": [
+    {
+      "requirement": "tokenizer_integrity",
+      "result": "PASS",
+      "evidence": "submission_artifacts/manifests/*.json",
+      "detail": {
+        "shards": 22,
+        "tokenizer_hash": "358592476e854961",
+        "mismatched": 0
+      }
+    },
+    {
+      "requirement": "shard_content_hashes",
+      "result": "PASS",
+      "evidence": "submission_artifacts/shards/ + manifests/",
+      "detail": {
+        "checked": 22,
+        "matched": 22
+      }
+    },
+    {
+      "requirement": "evaluation_firewall",
+      "result": "PASS",
+      "evidence": "run.log shard_blocked events + consumption ledger scan",
+      "detail": {
+        "eval_shards": 1,
+        "blocked": true,
+        "leaked_batches": 0,
+        "injection_attempted": true
+      }
+    },
+    {
+      "requirement": "packing_and_masks",
+      "result": "PASS",
+      "evidence": "recomputed batches at steps [5, 85, 90, 140]",
+      "detail": {
+        "steps_probed": [
+          5,
+          85,
+          90,
+          140
+        ],
+        "sequences_checked": 32,
+        "cross_document_attention_leaks": 0,
+        "padding_positions_bearing_loss": 0
+      }
+    },
+    {
+      "requirement": "agentic_observation_masking",
+      "result": "PASS",
+      "evidence": "pack_record over agentic shards",
+      "detail": {
+        "samples_checked": 25,
+        "observations_bearing_loss": 0
+      }
+    },
+    {
+      "requirement": "mixture_compliance",
+      "result": "PASS",
+      "evidence": "planned quota_timeline vs realised lanes in consumption ledger",
+      "detail": {
+        "max_abs_drift": 0.0,
+        "drift": {
+          "web": 0.0,
+          "code": 0.0,
+          "indic": 0.0,
+          "reasoning": 0.0,
+          "agentic": 0.0
+        },
+        "protected_floors_respected": true,
+        "realised": {
+          "web": 0.3586,
+          "code": 0.2477,
+          "indic": 0.1828,
+          "reasoning": 0.1469,
+          "agentic": 0.0641
+        }
+      }
+    },
+    {
+      "requirement": "opus_audit_trail",
+      "result": "PASS",
+      "evidence": "submission_artifacts/ledgers/opus_decisions.jsonl",
+      "detail": {
+        "decisions": 4752,
+        "statuses": [
+          "accepted",
+          "deferred",
+          "floor_override",
+          "rejected"
+        ],
+        "floor_overrides": 483,
+        "distinct_reasons": 4
+      }
+    },
+    {
+      "requirement": "crash_recovery",
+      "result": "PASS",
+      "evidence": "expected_next_batch.json declared pre-crash vs consumption ledger",
+      "detail": {
+        "expected_step": 90,
+        "expected_hash": "2bf8bad2184e8f2e",
+        "records_found": 1,
+        "observed_hash": "2bf8bad2184e8f2e",
+        "duplicate_microbatches": 0
+      }
+    },
+    {
+      "requirement": "replay",
+      "result": "PASS",
+      "evidence": "submission_artifacts/replay_report.json",
+      "detail": {
+        "compared": 30,
+        "hash_matched": 30,
+        "span_matched": 30
+      }
+    },
+    {
+      "requirement": "fork_divergence",
+      "result": "PASS",
+      "evidence": "submission_artifacts/fork_report.json",
+      "detail": {
+        "steps": 3,
+        "diverged": 3
+      }
+    },
+    {
+      "requirement": "learning_trace",
+      "result": "PASS",
+      "evidence": "submission_artifacts/ledgers/learning.jsonl joined to consumption",
+      "detail": {
+        "learning_records": 2462,
+        "microbatches_linked": 320,
+        "every_shard_resolves": true
+      }
+    },
+    {
+      "requirement": "throughput_reconstructible",
+      "result": "PASS",
+      "evidence": "performance.json vs consumption ledger",
+      "detail": {
+        "ledger_raw_tokens": 655360,
+        "reported_raw_tokens": 655360,
+        "ledger_loss_tokens": 564087,
+        "reported_loss_tokens": 564087,
+        "ledger_utilization": 0.980699,
+        "useful_tokens_per_sec": 3313.0
+      }
+    }
+  ],
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "anneal_reserve": true,
+  "cleaning_counters": {
+    "garbage_chars": 0,
+    "ghost_markers": 0,
+    "indic_joiners_kept": 0,
+    "pii_masked": 0
+  },
+  "cleaning_pipeline_hash": "599cbcf7933e50500a8f862229f260e3adfdaaa6216ad87adef6d0a1d119342d",
+  "contamination_status": "clean",
+  "content_hash": "f39ca951c21c9b267f692f43d6266b087445891eb41db2edc9ee015140a2ecc5",
+  "dedup_status": "passed",
+  "document_ids": [
+    "reasoning-r1-0096",
+    "reasoning-r1-0097",
+    "reasoning-r1-0098",
+    "reasoning-r1-0099"
+  ],
+  "eval_overlap": false,
+  "kind": "records",
+  "lane": "reasoning",
+  "language": "en",
+  "license": "Apache-2.0",
+  "never_train": false,
+  "parent_shard_ids": [],
+  "pii_status": "masked",
+  "provenance_tier": "A",
+  "script": "Latin",
+  "shard_id": "reasoning-records-004-f39ca951c21c",
+  "source_ids": [
+    "open-r1/OpenR1-Math-220k"
+  ],
+  "token_count": 2394,
+  "tokenizer_hash": "358592476e854961fc96cfd13f5e3a73c27e4c5d89de7508ea1145c552103c87",
+  "tokenizer_id": "s2-wiki-faithful-bpe-10k"
+}

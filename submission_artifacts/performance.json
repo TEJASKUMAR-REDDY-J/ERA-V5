@@ -1,0 +1,1 @@
+{"batches":320,"loader_seconds":3.455,"loader_share_of_wall":0.020292,"loss_bearing_fraction":0.860728,"loss_bearing_tokens":564087,"mean_packing_utilization":0.980699,"pad_tokens":12649,"raw_tokens":655360,"raw_tokens_per_sec":3849.1,"train_seconds":166.808,"useful_loss_bearing_tokens_per_sec":3313.0,"wall_seconds":170.263}

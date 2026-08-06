@@ -1,0 +1,52 @@
+{
+  "anneal_reserve": false,
+  "cleaning_counters": {
+    "garbage_chars": 0,
+    "ghost_markers": 72,
+    "indic_joiners_kept": 0,
+    "pii_masked": 0
+  },
+  "cleaning_pipeline_hash": "599cbcf7933e50500a8f862229f260e3adfdaaa6216ad87adef6d0a1d119342d",
+  "contamination_status": "clean",
+  "content_hash": "1b1daec1287acb0dbf4bbfd8c5c5dbeaf5bf297df943809e19fa8100a002793f",
+  "dedup_status": "passed",
+  "document_ids": [
+    "agentic-0040",
+    "agentic-0041",
+    "agentic-0042",
+    "agentic-0043",
+    "agentic-0044",
+    "agentic-0045",
+    "agentic-0046",
+    "agentic-0047",
+    "agentic-0048",
+    "agentic-0049",
+    "agentic-0050",
+    "agentic-0051",
+    "agentic-0052",
+    "agentic-0053",
+    "agentic-0054",
+    "agentic-0055",
+    "agentic-0056",
+    "agentic-0057",
+    "agentic-0058",
+    "agentic-0059"
+  ],
+  "eval_overlap": false,
+  "kind": "records",
+  "lane": "agentic",
+  "language": "en",
+  "license": "Apache-2.0",
+  "never_train": false,
+  "parent_shard_ids": [],
+  "pii_status": "masked",
+  "provenance_tier": "B",
+  "script": "Latin",
+  "shard_id": "agentic-records-002-1b1daec1287a",
+  "source_ids": [
+    "glaiveai/glaive-function-calling-v2"
+  ],
+  "token_count": 11343,
+  "tokenizer_hash": "358592476e854961fc96cfd13f5e3a73c27e4c5d89de7508ea1145c552103c87",
+  "tokenizer_id": "s2-wiki-faithful-bpe-10k"
+}

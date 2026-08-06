@@ -1,0 +1,1 @@
+{"branch_id":"main","checkpoint_id":"ckpt_main_step00150","consumption_offset":302,"global_step":150,"learning_offset":2330,"perf":{"batches":302,"loader_seconds":3.3043,"loss_tokens":537591,"pad_tokens":11176,"raw_tokens":618496,"train_seconds":157.6812,"utilization_sum":296.543},"run_id":"v5-s6-demo","seed":20260706}

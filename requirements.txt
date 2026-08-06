@@ -1,0 +1,8 @@
+torch>=2.2
+tokenizers>=0.20
+numpy>=1.26
+regex>=2024.0
+pytest>=8.0
+# only needed to regenerate the vendored corpus (tools/build_vendor_corpus.py);
+# run_demo.py itself is fully offline
+datasets>=3.0
