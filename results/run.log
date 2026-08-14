@@ -1,0 +1,57 @@
+==============================================================================
+FIREFLY -- Coprime Interference Codes for Arbitrary-Domain Alignment
+Tejaskumar Reddy J  |  ERA V5  |  Kronecker Embeddings V2
+2026-08-14 09:12:21
+==============================================================================
+
+### E2  arithmetic: input x output-space grid
+  operation '+'  (train 1-3 digits, digit count sampled uniformly)
+    digit->digits          1d:1.000 2d:0.763 3d:0.313 4d:0.000 5d:0.000   (170s)
+    abacus->digits         1d:0.466 2d:0.560 3d:0.252 4d:0.003 5d:0.000   (177s)
+    firefly->digits        1d:0.852 2d:0.022 3d:0.002 4d:0.000 5d:0.000   (164s)
+    firefly+op->digits     1d:1.000 2d:1.000 3d:0.784 4d:0.000 5d:0.000   (161s)
+    digit->residues        1d:0.000 2d:0.000 3d:0.000 4d:0.000 5d:0.000   (97s)
+    firefly->residues      1d:0.666 2d:0.000 3d:0.000 4d:0.000 5d:0.000   (81s)
+    firefly+op->residues   1d:1.000 2d:0.854 3d:0.150 4d:0.000 5d:0.000   (110s)
+  operation '*'  (train 1-3 digits, digit count sampled uniformly)
+    digit->digits          1d:0.924 2d:0.043 3d:0.000 4d:0.000 5d:0.000   (221s)
+    abacus->digits         1d:0.679 2d:0.015 3d:0.000 4d:0.000 5d:0.000   (305s)
+    firefly->digits        1d:0.793 2d:0.001 3d:0.000 4d:0.000 5d:0.000   (175s)
+    firefly+op->digits     1d:1.000 2d:0.004 3d:0.000 4d:0.000 5d:0.000   (168s)
+    digit->residues        1d:0.030 2d:0.000 3d:0.000 4d:0.000 5d:0.000   (106s)
+    firefly->residues      1d:0.905 2d:0.000 3d:0.000 4d:0.000 5d:0.000   (75s)
+    firefly+op->residues   1d:1.000 2d:0.027 3d:0.000 4d:0.006 5d:0.001   (84s)
+[PASS] e2_arithmetic  5-digit addition, best digit-readout 0.000 vs best residue-readout 0.000
+    (2144s)
+
+### E4  one projection, three modalities
+  encoding text (language id, 10 scripts) [phase]
+  encoding images (MNIST, padded 28->32) [phase]
+  encoding audio (free spoken digits 0-9, real recordings) [phase]
+  [phase] one shared projection across all three modalities
+      shared step    0 loss 6.9568
+      shared step  500 loss 0.0016
+      shared step 1000 loss 0.0006
+  [phase] three private projections
+      private step    0 loss 6.9299
+      private step  500 loss 0.0008
+      private step 1000 loss 0.0004
+    [phase] shared text=0.837 image=0.903 audio=0.352  | private text=0.832 image=0.879 audio=0.363
+  encoding text (language id, 10 scripts) [full]
+  encoding images (MNIST, padded 28->32) [full]
+  encoding audio (free spoken digits 0-9, real recordings) [full]
+  [full] one shared projection across all three modalities
+      shared step    0 loss 6.9762
+      shared step  500 loss 0.0021
+      shared step 1000 loss 0.0007
+  [full] three private projections
+      private step    0 loss 6.9433
+      private step  500 loss 0.0018
+      private step 1000 loss 0.0007
+    [full] shared text=0.993 image=0.906 audio=0.637  | private text=0.991 image=0.903 audio=0.670
+[PASS] e4_multimodal  phase+magnitude, one shared W: text=0.993  image=0.906  audio=0.637
+    (1546s)
+
+==============================================================================
+total 3690s   all stages completed
+wrote C:\Users\chann\OneDrive\Desktop\ERA V5\Session 7_FIREFLY\results\summary.json

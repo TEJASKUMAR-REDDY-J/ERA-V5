@@ -1,0 +1,1164 @@
+{
+  "e0": {
+    "passed": true,
+    "output": "28 passed in 3.52s",
+    "_seconds": 15.9
+  },
+  "e1": {
+    "n_probes": 400,
+    "insertion": {
+      "0": {
+        "kronecker": 0.9999999999999781,
+        "firefly_phase": 0.9999999999999781,
+        "firefly_magnitude": 0.9999999999995097
+      },
+      "1": {
+        "kronecker": 0.02342635532760746,
+        "firefly_phase": 0.4783172277020406,
+        "firefly_magnitude": 0.918648440907207
+      },
+      "2": {
+        "kronecker": 0.011131857641068632,
+        "firefly_phase": 0.2988802107081287,
+        "firefly_magnitude": 0.8057831088090094
+      },
+      "3": {
+        "kronecker": 0.011179161094420395,
+        "firefly_phase": 0.1507342230731178,
+        "firefly_magnitude": 0.7059844384514341
+      },
+      "4": {
+        "kronecker": 0.005441015776087518,
+        "firefly_phase": 0.11876559845458182,
+        "firefly_magnitude": 0.6288822024621197
+      },
+      "5": {
+        "kronecker": 0.0034209607978922278,
+        "firefly_phase": 0.03948141897944964,
+        "firefly_magnitude": 0.5676537565260711
+      },
+      "6": {
+        "kronecker": 0.0018320063945308559,
+        "firefly_phase": 0.043185807486827044,
+        "firefly_magnitude": 0.5204547210752133
+      }
+    },
+    "substitution": {
+      "0": {
+        "kronecker": 0.9999999999999781,
+        "firefly_phase": 0.9999999999999781,
+        "firefly_magnitude": 0.9999999999995097
+      },
+      "1": {
+        "kronecker": 0.8058328730395664,
+        "firefly_phase": 0.8118213828736817,
+        "firefly_magnitude": 0.815669713598933
+      },
+      "2": {
+        "kronecker": 0.6121762776995703,
+        "firefly_phase": 0.6191556530413864,
+        "firefly_magnitude": 0.625724206957983
+      },
+      "3": {
+        "kronecker": 0.4195123565012595,
+        "firefly_phase": 0.42744889155511495,
+        "firefly_magnitude": 0.43766803184179354
+      },
+      "4": {
+        "kronecker": 0.2687709172036276,
+        "firefly_phase": 0.2774666262120566,
+        "firefly_magnitude": 0.2919333264297942
+      },
+      "5": {
+        "kronecker": 0.1623440148071743,
+        "firefly_phase": 0.16991721187337747,
+        "firefly_magnitude": 0.1857153667190197
+      },
+      "6": {
+        "kronecker": 0.09820529357346743,
+        "firefly_phase": 0.10543560691611567,
+        "firefly_magnitude": 0.11830148042121164
+      }
+    },
+    "suffix": {
+      "0": {
+        "kronecker": 0.9999999999999781,
+        "firefly_phase": 0.9999999999999781,
+        "firefly_magnitude": 0.9999999999995097
+      },
+      "1": {
+        "kronecker": 0.9160591219958175,
+        "firefly_phase": 0.9186452372743936,
+        "firefly_magnitude": 0.918648440907207
+      },
+      "2": {
+        "kronecker": 0.8515721971808241,
+        "firefly_phase": 0.8057997858516518,
+        "firefly_magnitude": 0.8057831088090094
+      },
+      "3": {
+        "kronecker": 0.7997089625666183,
+        "firefly_phase": 0.7060328388520122,
+        "firefly_magnitude": 0.7059844384514341
+      },
+      "4": {
+        "kronecker": 0.7566778305488168,
+        "firefly_phase": 0.628961207963056,
+        "firefly_magnitude": 0.6288822024621197
+      },
+      "5": {
+        "kronecker": 0.7201506294451606,
+        "firefly_phase": 0.5677604924363562,
+        "firefly_magnitude": 0.5676537565260711
+      },
+      "6": {
+        "kronecker": 0.6885955782704098,
+        "firefly_phase": 0.5205839980576097,
+        "firefly_magnitude": 0.5204547210752133
+      }
+    },
+    "prefixed_form_retrieval_median_rank": {
+      "kronecker": 1431.0,
+      "firefly_phase": 42.0,
+      "firefly_magnitude": 1.0
+    },
+    "prefixed_form_retrieval_top10_rate": {
+      "kronecker": 0.0,
+      "firefly_phase": 0.18181818181818182,
+      "firefly_magnitude": 1.0
+    },
+    "magnitude_from_kronecker_linear_r2": 0.928202016838239,
+    "magnitude_reconstruction_under_shift": {
+      "0": {
+        "linear_reconstruction": 0.9999999999995045,
+        "true_magnitude": 0.9999999999995093
+      },
+      "1": {
+        "linear_reconstruction": 0.8617109731430656,
+        "true_magnitude": 0.9171281823838033
+      },
+      "2": {
+        "linear_reconstruction": 0.8249387259337715,
+        "true_magnitude": 0.8025694966403839
+      },
+      "3": {
+        "linear_reconstruction": 0.7678446027878922,
+        "true_magnitude": 0.7017347244471935
+      }
+    },
+    "magnitude_is_mostly_a_histogram": [
+      {
+        "a": "abc",
+        "b": "cba",
+        "magnitude_cos": 0.9999999999999998,
+        "histogram_cos": 1.0000000000000002,
+        "phase_cos": 0.5615705233796502,
+        "has_repeats": false
+      },
+      {
+        "a": "listen",
+        "b": "silent",
+        "magnitude_cos": 1.0,
+        "histogram_cos": 1.0000000000000002,
+        "phase_cos": 0.5020754596232935,
+        "has_repeats": false
+      },
+      {
+        "a": "abab",
+        "b": "baba",
+        "magnitude_cos": 1.0,
+        "histogram_cos": 0.9999999999999998,
+        "phase_cos": 0.6172428282989141,
+        "has_repeats": true
+      },
+      {
+        "a": "aabb",
+        "b": "abab",
+        "magnitude_cos": 0.904892654215099,
+        "histogram_cos": 0.9999999999999998,
+        "phase_cos": 0.8219441524966685,
+        "has_repeats": true
+      },
+      {
+        "a": "aaab",
+        "b": "abaa",
+        "magnitude_cos": 0.9720099680756296,
+        "histogram_cos": 0.9999999999999998,
+        "phase_cos": 0.7937041324662982,
+        "has_repeats": true
+      }
+    ],
+    "magnitude_equals_histogram_when_no_byte_repeats": true,
+    "phase_from_kronecker_linear_r2": 0.9859629440873036,
+    "run_vs_arun": {
+      "kronecker": -0.00042304471168049906,
+      "firefly_phase": 0.4259211633464697,
+      "firefly_magnitude": 0.8660254037844386
+    },
+    "_seconds": 169.7
+  },
+  "e2": {
+    "train_digits": [
+      1,
+      3
+    ],
+    "test_digits": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "n_train": 30000,
+    "steps": 2000,
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37
+    ],
+    "modulus": 7420738134810,
+    "ops": {
+      "+": {
+        "digit->digits": {
+          "accuracy_by_digits": {
+            "1": 1.0,
+            "2": 0.763,
+            "3": 0.313,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 341280,
+          "seconds": 169.7,
+          "input": "digit",
+          "output": "digits"
+        },
+        "abacus->digits": {
+          "accuracy_by_digits": {
+            "1": 0.466,
+            "2": 0.56,
+            "3": 0.252,
+            "4": 0.003,
+            "5": 0.0
+          },
+          "params": 341280,
+          "seconds": 176.7,
+          "input": "abacus",
+          "output": "digits"
+        },
+        "firefly->digits": {
+          "accuracy_by_digits": {
+            "1": 0.852,
+            "2": 0.022,
+            "3": 0.002,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 350496,
+          "seconds": 164.3,
+          "input": "firefly",
+          "output": "digits"
+        },
+        "firefly+op->digits": {
+          "accuracy_by_digits": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 0.784,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 350496,
+          "seconds": 161.4,
+          "input": "firefly+op",
+          "output": "digits"
+        },
+        "digit->residues": {
+          "accuracy_by_digits": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 360389,
+          "seconds": 96.7,
+          "input": "digit",
+          "output": "residues"
+        },
+        "firefly->residues": {
+          "accuracy_by_digits": {
+            "1": 0.666,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 369605,
+          "seconds": 81.2,
+          "input": "firefly",
+          "output": "residues"
+        },
+        "firefly+op->residues": {
+          "accuracy_by_digits": {
+            "1": 1.0,
+            "2": 0.854,
+            "3": 0.15,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 369605,
+          "seconds": 110.1,
+          "input": "firefly+op",
+          "output": "residues"
+        }
+      },
+      "*": {
+        "digit->digits": {
+          "accuracy_by_digits": {
+            "1": 0.924,
+            "2": 0.043,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 341280,
+          "seconds": 221.4,
+          "input": "digit",
+          "output": "digits"
+        },
+        "abacus->digits": {
+          "accuracy_by_digits": {
+            "1": 0.679,
+            "2": 0.015,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 341280,
+          "seconds": 305.1,
+          "input": "abacus",
+          "output": "digits"
+        },
+        "firefly->digits": {
+          "accuracy_by_digits": {
+            "1": 0.793,
+            "2": 0.001,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 350496,
+          "seconds": 174.8,
+          "input": "firefly",
+          "output": "digits"
+        },
+        "firefly+op->digits": {
+          "accuracy_by_digits": {
+            "1": 1.0,
+            "2": 0.004,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 350496,
+          "seconds": 168.0,
+          "input": "firefly+op",
+          "output": "digits"
+        },
+        "digit->residues": {
+          "accuracy_by_digits": {
+            "1": 0.03,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 360389,
+          "seconds": 106.0,
+          "input": "digit",
+          "output": "residues"
+        },
+        "firefly->residues": {
+          "accuracy_by_digits": {
+            "1": 0.905,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          },
+          "params": 369605,
+          "seconds": 75.4,
+          "input": "firefly",
+          "output": "residues"
+        },
+        "firefly+op->residues": {
+          "accuracy_by_digits": {
+            "1": 1.0,
+            "2": 0.027,
+            "3": 0.0,
+            "4": 0.006,
+            "5": 0.001
+          },
+          "params": 369605,
+          "seconds": 84.0,
+          "input": "firefly+op",
+          "output": "residues"
+        }
+      }
+    },
+    "readout_is_the_bottleneck": false,
+    "_seconds": 2144.2
+  },
+  "e3": {
+    "vocab": 8192,
+    "seq": 96,
+    "steps": 900,
+    "seeds": [
+      0,
+      1
+    ],
+    "d_model": 160,
+    "n_layer": 3,
+    "prediction": "tie between kronecker and firefly (Phi = kappa @ F)",
+    "arms": {
+      "learned": {
+        "runs": [
+          {
+            "final_val_loss": 6.14927101880312,
+            "curve": [
+              {
+                "step": 0,
+                "val_loss": 8.861953735351562
+              },
+              {
+                "step": 150,
+                "val_loss": 6.795166850090027
+              },
+              {
+                "step": 300,
+                "val_loss": 6.478914459546407
+              },
+              {
+                "step": 450,
+                "val_loss": 6.301284889380137
+              },
+              {
+                "step": 600,
+                "val_loss": 6.205106019973755
+              },
+              {
+                "step": 750,
+                "val_loss": 6.166243354479472
+              },
+              {
+                "step": 899,
+                "val_loss": 6.158654431502025
+              }
+            ],
+            "input_side_trainable_params": 1310720,
+            "seconds": 326.8
+          },
+          {
+            "final_val_loss": 6.143215291202068,
+            "curve": [
+              {
+                "step": 0,
+                "val_loss": 8.90233059724172
+              },
+              {
+                "step": 150,
+                "val_loss": 6.778477331002553
+              },
+              {
+                "step": 300,
+                "val_loss": 6.448354880015056
+              },
+              {
+                "step": 450,
+                "val_loss": 6.293052474657695
+              },
+              {
+                "step": 600,
+                "val_loss": 6.203618288040161
+              },
+              {
+                "step": 750,
+                "val_loss": 6.16246501604716
+              },
+              {
+                "step": 899,
+                "val_loss": 6.154185771942139
+              }
+            ],
+            "input_side_trainable_params": 1310720,
+            "seconds": 407.6
+          }
+        ],
+        "mean_val_loss": 6.146243155002594,
+        "std_val_loss": 0.0030278638005256653,
+        "input_side_trainable_params": 1310720
+      },
+      "kronecker": {
+        "runs": [
+          {
+            "final_val_loss": 6.125126950442791,
+            "curve": [
+              {
+                "step": 0,
+                "val_loss": 8.995617190996805
+              },
+              {
+                "step": 150,
+                "val_loss": 6.692403276761373
+              },
+              {
+                "step": 300,
+                "val_loss": 6.377623677253723
+              },
+              {
+                "step": 450,
+                "val_loss": 6.243415276209514
+              },
+              {
+                "step": 600,
+                "val_loss": 6.1681845386823015
+              },
+              {
+                "step": 750,
+                "val_loss": 6.139171143372853
+              },
+              {
+                "step": 899,
+                "val_loss": 6.133868197600047
+              }
+            ],
+            "input_side_trainable_params": 1310720,
+            "seconds": 9434.7
+          },
+          {
+            "final_val_loss": 6.133307345211506,
+            "curve": [
+              {
+                "step": 0,
+                "val_loss": 8.971213499704996
+              },
+              {
+                "step": 150,
+                "val_loss": 6.687715987364451
+              },
+              {
+                "step": 300,
+                "val_loss": 6.3817231853803
+              },
+              {
+                "step": 450,
+                "val_loss": 6.2501028180122375
+              },
+              {
+                "step": 600,
+                "val_loss": 6.18258798122406
+              },
+              {
+                "step": 750,
+                "val_loss": 6.149952272574107
+              },
+              {
+                "step": 899,
+                "val_loss": 6.143495400746663
+              }
+            ],
+            "input_side_trainable_params": 1310720,
+            "seconds": 544.1
+          }
+        ],
+        "mean_val_loss": 6.129217147827148,
+        "std_val_loss": 0.004090197384357452,
+        "input_side_trainable_params": 1310720
+      },
+      "firefly": {
+        "runs": [
+          {
+            "final_val_loss": 6.115704327821732,
+            "curve": [
+              {
+                "step": 0,
+                "val_loss": 8.965165615081787
+              },
+              {
+                "step": 150,
+                "val_loss": 6.598998745282491
+              },
+              {
+                "step": 300,
+                "val_loss": 6.352166334788005
+              },
+              {
+                "step": 450,
+                "val_loss": 6.232749064763387
+              },
+              {
+                "step": 600,
+                "val_loss": 6.1597017248471575
+              },
+              {
+                "step": 750,
+                "val_loss": 6.130460202693939
+              },
+              {
+                "step": 899,
+                "val_loss": 6.124623775482178
+              }
+            ],
+            "input_side_trainable_params": 1310720,
+            "seconds": 666.6
+          },
+          {
+            "final_val_loss": 6.1201626136898994,
+            "curve": [
+              {
+                "step": 0,
+                "val_loss": 8.958493034044901
+              },
+              {
+                "step": 150,
+                "val_loss": 6.598290681838989
+              },
+              {
+                "step": 300,
+                "val_loss": 6.350465873877208
+              },
+              {
+                "step": 450,
+                "val_loss": 6.2313205401102705
+              },
+              {
+                "step": 600,
+                "val_loss": 6.168441951274872
+              },
+              {
+                "step": 750,
+                "val_loss": 6.1355680624643965
+              },
+              {
+                "step": 899,
+                "val_loss": 6.129466652870178
+              }
+            ],
+            "input_side_trainable_params": 1310720,
+            "seconds": 527.8
+          }
+        ],
+        "mean_val_loss": 6.1179334707558155,
+        "std_val_loss": 0.0022291429340839386,
+        "input_side_trainable_params": 1310720
+      }
+    },
+    "firefly_minus_kronecker": -0.011283677071332932,
+    "seed_noise": 0.004658196310116277,
+    "tie_confirmed": true,
+    "_seconds": 11925.6
+  },
+  "e4": {
+    "budget_split": {
+      "text": "256 value (delta) x 16 index x 2",
+      "audio": "16 value x 256 time x 2",
+      "image": "16 value x 16^2 spatial x 2"
+    },
+    "value_mode_sweep": {
+      "2": {
+        "mean_resolution_cosine": 0.9999984757958043,
+        "code_dim": 1024
+      },
+      "4": {
+        "mean_resolution_cosine": 0.9999911570285006,
+        "code_dim": 2048
+      },
+      "8": {
+        "mean_resolution_cosine": 0.9999526640600432,
+        "code_dim": 4096
+      },
+      "16": {
+        "mean_resolution_cosine": 0.9966387998173823,
+        "code_dim": 8192
+      },
+      "32": {
+        "mean_resolution_cosine": 0.8993884249063945,
+        "code_dim": 16384
+      },
+      "64": {
+        "mean_resolution_cosine": 0.7598167576154314,
+        "code_dim": 32768
+      },
+      "128": {
+        "mean_resolution_cosine": 0.6637288929464746,
+        "code_dim": 65536
+      },
+      "256": {
+        "mean_resolution_cosine": 0.577824274720074,
+        "code_dim": 131072
+      }
+    },
+    "real_image_resolution": {
+      "32->64": {
+        "mean_cosine": 0.9787772786295679,
+        "min_cosine": 0.9631307473664832,
+        "n": 400
+      },
+      "32->128": {
+        "mean_cosine": 0.9788207820232369,
+        "min_cosine": 0.9654221994859582,
+        "n": 400
+      },
+      "64->128": {
+        "mean_cosine": 0.9959341282382819,
+        "min_cosine": 0.9915154580408604,
+        "n": 400
+      }
+    },
+    "codes": {
+      "phase": {
+        "code_dims": {
+          "text": 8192,
+          "image": 8192,
+          "audio": 8192
+        },
+        "shared": {
+          "accuracy": {
+            "text": 0.8366666666666667,
+            "image": 0.9033333333333333,
+            "audio": 0.35185185185185186
+          },
+          "projection_params": 1048576
+        },
+        "private": {
+          "accuracy": {
+            "text": 0.8316666666666667,
+            "image": 0.8791666666666667,
+            "audio": 0.362962962962963
+          },
+          "projection_params": 3145728
+        },
+        "n_samples": {
+          "text": 6000,
+          "image": 6000,
+          "audio": 2700
+        },
+        "shared_vs_private_gap": {
+          "text": -0.0050000000000000044,
+          "image": -0.02416666666666667,
+          "audio": 0.011111111111111127
+        }
+      },
+      "full": {
+        "code_dims": {
+          "text": 12288,
+          "image": 12288,
+          "audio": 12288
+        },
+        "shared": {
+          "accuracy": {
+            "text": 0.9925,
+            "image": 0.9058333333333334,
+            "audio": 0.6370370370370371
+          },
+          "projection_params": 1572864
+        },
+        "private": {
+          "accuracy": {
+            "text": 0.9908333333333333,
+            "image": 0.9033333333333333,
+            "audio": 0.6703703703703704
+          },
+          "projection_params": 4718592
+        },
+        "n_samples": {
+          "text": 6000,
+          "image": 6000,
+          "audio": 2700
+        },
+        "shared_vs_private_gap": {
+          "text": -0.0016666666666667052,
+          "image": -0.0025000000000000577,
+          "audio": 0.033333333333333326
+        }
+      }
+    },
+    "code_dims": {
+      "text": 8192,
+      "image": 8192,
+      "audio": 8192
+    },
+    "n_samples": {
+      "text": 6000,
+      "image": 6000,
+      "audio": 2700
+    },
+    "shared": {
+      "accuracy": {
+        "text": 0.8366666666666667,
+        "image": 0.9033333333333333,
+        "audio": 0.35185185185185186
+      },
+      "projection_params": 1048576
+    },
+    "private": {
+      "accuracy": {
+        "text": 0.8316666666666667,
+        "image": 0.8791666666666667,
+        "audio": 0.362962962962963
+      },
+      "projection_params": 3145728
+    },
+    "phase_vs_magnitude": {
+      "text": {
+        "phase_only": 0.8366666666666667,
+        "phase_plus_magnitude": 0.9925
+      },
+      "image": {
+        "phase_only": 0.9033333333333333,
+        "phase_plus_magnitude": 0.9058333333333334
+      },
+      "audio": {
+        "phase_only": 0.35185185185185186,
+        "phase_plus_magnitude": 0.6370370370370371
+      }
+    },
+    "wall_seconds": 1545.4,
+    "_seconds": 1546.2
+  },
+  "e5": {
+    "n_tokens": 2000,
+    "params": 0,
+    "nca_baseline": {
+      "params": 628801,
+      "wellposed_K24": {
+        "matched_filter_exact": 1.0,
+        "nca_exact": 0.742
+      },
+      "compressed_K10": {
+        "matched_filter_byte": 0.991,
+        "nca_byte": 0.977
+      },
+      "verdict": "The learned decoder lost in every regime, including the underdetermined one built for it. With a uniform grid pinv IS a matched filter, which is the optimal estimator under additive white noise, so there was no error to correct. Removed."
+    },
+    "k_sweep": {
+      "8": {
+        "exact": 0.8715,
+        "byte": 0.951291711517761
+      },
+      "12": {
+        "exact": 0.996,
+        "byte": 0.9983853606027987
+      },
+      "16": {
+        "exact": 1.0,
+        "byte": 1.0
+      },
+      "24": {
+        "exact": 1.0,
+        "byte": 1.0
+      },
+      "32": {
+        "exact": 1.0,
+        "byte": 1.0
+      },
+      "48": {
+        "exact": 1.0,
+        "byte": 1.0
+      }
+    },
+    "by_length": {
+      "1": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "2": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "3": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "4": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "5": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "6": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "7": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "8": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "9": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "10": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "11": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "12": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "13": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "14": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "15": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "16": {
+        "exact": 1.0,
+        "byte": 1.0,
+        "n": 120,
+        "k_ge_l": true
+      },
+      "17": {
+        "exact": 0.38333333333333336,
+        "byte": 0.9465686274509804,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "18": {
+        "exact": 0.20833333333333334,
+        "byte": 0.9074074074074074,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "19": {
+        "exact": 0.08333333333333333,
+        "byte": 0.8723684210526316,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "20": {
+        "exact": 0.025,
+        "byte": 0.8325,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "21": {
+        "exact": 0.03333333333333333,
+        "byte": 0.7956349206349206,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "22": {
+        "exact": 0.0,
+        "byte": 0.7575757575757576,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "23": {
+        "exact": 0.0,
+        "byte": 0.7326086956521739,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "24": {
+        "exact": 0.0,
+        "byte": 0.7013888888888888,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "25": {
+        "exact": 0.0,
+        "byte": 0.655,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "26": {
+        "exact": 0.0,
+        "byte": 0.6538461538461539,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "27": {
+        "exact": 0.0,
+        "byte": 0.6327160493827161,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "28": {
+        "exact": 0.0,
+        "byte": 0.6133928571428572,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "29": {
+        "exact": 0.0,
+        "byte": 0.5732758620689655,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "30": {
+        "exact": 0.0,
+        "byte": 0.5675,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "31": {
+        "exact": 0.0,
+        "byte": 0.5532258064516129,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "32": {
+        "exact": 0.0,
+        "byte": 0.5450520833333333,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "33": {
+        "exact": 0.0,
+        "byte": 0.5116161616161616,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "34": {
+        "exact": 0.0,
+        "byte": 0.5026960784313725,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "35": {
+        "exact": 0.0,
+        "byte": 0.5,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "36": {
+        "exact": 0.0,
+        "byte": 0.47800925925925924,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "37": {
+        "exact": 0.0,
+        "byte": 0.48558558558558557,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "38": {
+        "exact": 0.0,
+        "byte": 0.46885964912280703,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "39": {
+        "exact": 0.0,
+        "byte": 0.46773504273504274,
+        "n": 120,
+        "k_ge_l": false
+      },
+      "40": {
+        "exact": 0.0,
+        "byte": 0.46125,
+        "n": 120,
+        "k_ge_l": false
+      }
+    },
+    "noise": {
+      "0.0": {
+        "exact": 1.0,
+        "byte": 1.0
+      },
+      "0.01": {
+        "exact": 1.0,
+        "byte": 1.0
+      },
+      "0.03": {
+        "exact": 1.0,
+        "byte": 1.0
+      },
+      "0.1": {
+        "exact": 1.0,
+        "byte": 1.0
+      },
+      "0.3": {
+        "exact": 0.965,
+        "byte": 0.9969888587774767
+      }
+    },
+    "structured_noise": {
+      "int8_quantisation": {
+        "exact": 1.0,
+        "byte": 1.0
+      },
+      "low_rank_residual_r8": {
+        "exact": 1.0,
+        "byte": 1.0
+      },
+      "low_rank_residual_r2": {
+        "exact": 1.0,
+        "byte": 1.0
+      }
+    },
+    "head_comparison": {
+      "softmax_head_params_131k_vocab_4096_dmodel": 536870912,
+      "firefly_decoder_params": 0,
+      "length_inference_exact": true
+    },
+    "wall_seconds": 25.9,
+    "_seconds": 26.5
+  }
+}

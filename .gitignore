@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Regenerable from run_all.py; 12MB of tokeniser + token-id caches.
+data_cache/
+
+# web/data.json and web/*.png are COMMITTED on purpose, so the web/ folder
+# can be dropped onto Netlify straight from a clone without a build step.

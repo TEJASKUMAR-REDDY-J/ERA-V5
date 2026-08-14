@@ -1,0 +1,385 @@
+{
+  "n_train": 6910,
+  "n_heldout": 1220,
+  "n_longer": 62,
+  "train_max_bytes": 12,
+  "regimes": {
+    "wellposed": {
+      "k_frequencies": 24,
+      "code_dim": 12288,
+      "params_total": 628801,
+      "params_local_rule": 38929,
+      "loss_curve": [
+        5.626721382141113,
+        0.5262120366096497,
+        0.24596919119358063,
+        0.5116980671882629,
+        0.5218462944030762,
+        0.44058144092559814
+      ],
+      "noise_sweep": {
+        "0.0": {
+          "nca_exact": 0.7442622950819672,
+          "nca_byte": 0.984767735004425,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0
+        },
+        "0.05": {
+          "nca_exact": 0.7229508196721312,
+          "nca_byte": 0.9831967353820801,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0
+        },
+        "0.1": {
+          "nca_exact": 0.6655737704918033,
+          "nca_byte": 0.9791325330734253,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0
+        },
+        "0.2": {
+          "nca_exact": 0.43524590163934423,
+          "nca_byte": 0.9583333134651184,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0
+        },
+        "0.4": {
+          "nca_exact": 0.0860655737704918,
+          "nca_byte": 0.8858948349952698,
+          "matched_filter_exact": 0.8098360655737705,
+          "matched_filter_byte": 0.9404761904761905
+        }
+      },
+      "step_ablation": {
+        "0.0": {
+          "0": 0.0,
+          "1": 0.001639344262295082,
+          "2": 0.036885245901639344,
+          "4": 0.14754098360655737,
+          "8": 0.5254098360655738,
+          "16": 0.7442622950819672
+        },
+        "0.2": {
+          "0": 0.0,
+          "1": 0.002459016393442623,
+          "2": 0.01721311475409836,
+          "4": 0.08278688524590164,
+          "8": 0.30327868852459017,
+          "16": 0.43524590163934423
+        }
+      },
+      "length_generalisation": {
+        "1": {
+          "exact": 0.041666666666666664,
+          "byte": 0.9600694179534912,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 24,
+          "trained_on_this_length": true
+        },
+        "2": {
+          "exact": 0.5689655172413793,
+          "byte": 0.977729856967926,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 58,
+          "trained_on_this_length": true
+        },
+        "3": {
+          "exact": 0.782051282051282,
+          "byte": 0.9901175498962402,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 156,
+          "trained_on_this_length": true
+        },
+        "4": {
+          "exact": 0.9098712446351931,
+          "byte": 0.9953504800796509,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 233,
+          "trained_on_this_length": true
+        },
+        "5": {
+          "exact": 0.8839285714285714,
+          "byte": 0.9940476417541504,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 224,
+          "trained_on_this_length": true
+        },
+        "6": {
+          "exact": 0.896551724137931,
+          "byte": 0.9954022765159607,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 145,
+          "trained_on_this_length": true
+        },
+        "7": {
+          "exact": 0.717741935483871,
+          "byte": 0.9858871102333069,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 124,
+          "trained_on_this_length": true
+        },
+        "8": {
+          "exact": 0.6697247706422018,
+          "byte": 0.9816513657569885,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 109,
+          "trained_on_this_length": true
+        },
+        "9": {
+          "exact": 0.45,
+          "byte": 0.9692708253860474,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 80,
+          "trained_on_this_length": true
+        },
+        "10": {
+          "exact": 0.32,
+          "byte": 0.9516666531562805,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 25,
+          "trained_on_this_length": true
+        },
+        "11": {
+          "exact": 0.20833333333333334,
+          "byte": 0.921875,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 24,
+          "trained_on_this_length": true
+        },
+        "13": {
+          "exact": 0.0,
+          "byte": 0.807692289352417,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 39,
+          "trained_on_this_length": false
+        }
+      },
+      "lattice_growth": {
+        "16": 0.7483333333333333,
+        "24": 0.7516666666666667,
+        "32": 0.7483333333333333,
+        "48": 0.5016666666666667,
+        "64": 0.48833333333333334
+      },
+      "regeneration": {
+        "none": 0.755,
+        "wiped_at_step_2": 0.75125,
+        "wiped_at_step_4": 0.75375,
+        "wiped_at_step_8": 0.75625
+      }
+    },
+    "compressed": {
+      "k_frequencies": 10,
+      "code_dim": 5120,
+      "params_total": 284737,
+      "params_local_rule": 38929,
+      "loss_curve": [
+        5.594759941101074,
+        0.5844327807426453,
+        0.33965981006622314,
+        0.6323078870773315,
+        0.6792834997177124,
+        0.6049588918685913
+      ],
+      "noise_sweep": {
+        "0.0": {
+          "nca_exact": 0.6401639344262295,
+          "nca_byte": 0.9768784046173096,
+          "matched_filter_exact": 0.9655737704918033,
+          "matched_filter_byte": 0.9910714285714286
+        },
+        "0.05": {
+          "nca_exact": 0.6114754098360655,
+          "nca_byte": 0.9744535684585571,
+          "matched_filter_exact": 0.9655737704918033,
+          "matched_filter_byte": 0.9910714285714286
+        },
+        "0.1": {
+          "nca_exact": 0.5131147540983606,
+          "nca_byte": 0.965573787689209,
+          "matched_filter_exact": 0.9655737704918033,
+          "matched_filter_byte": 0.9910714285714286
+        },
+        "0.2": {
+          "nca_exact": 0.22049180327868853,
+          "nca_byte": 0.9282786846160889,
+          "matched_filter_exact": 0.9532786885245902,
+          "matched_filter_byte": 0.9861607142857143
+        },
+        "0.4": {
+          "nca_exact": 0.020491803278688523,
+          "nca_byte": 0.84795081615448,
+          "matched_filter_exact": 0.33278688524590166,
+          "matched_filter_byte": 0.6366071428571428
+        }
+      },
+      "step_ablation": {
+        "0.0": {
+          "0": 0.0,
+          "1": 0.001639344262295082,
+          "2": 0.036885245901639344,
+          "4": 0.1721311475409836,
+          "8": 0.4491803278688525,
+          "16": 0.6401639344262295
+        },
+        "0.2": {
+          "0": 0.0,
+          "1": 0.001639344262295082,
+          "2": 0.009836065573770493,
+          "4": 0.05737704918032787,
+          "8": 0.1918032786885246,
+          "16": 0.22049180327868853
+        }
+      },
+      "length_generalisation": {
+        "1": {
+          "exact": 0.0,
+          "byte": 0.9583333134651184,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 24,
+          "trained_on_this_length": true
+        },
+        "2": {
+          "exact": 0.46551724137931033,
+          "byte": 0.9727011322975159,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 58,
+          "trained_on_this_length": true
+        },
+        "3": {
+          "exact": 0.7243589743589743,
+          "byte": 0.9850427508354187,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 156,
+          "trained_on_this_length": true
+        },
+        "4": {
+          "exact": 0.8369098712446352,
+          "byte": 0.9917739629745483,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 233,
+          "trained_on_this_length": true
+        },
+        "5": {
+          "exact": 0.7857142857142857,
+          "byte": 0.988095223903656,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 224,
+          "trained_on_this_length": true
+        },
+        "6": {
+          "exact": 0.8137931034482758,
+          "byte": 0.9919540286064148,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 145,
+          "trained_on_this_length": true
+        },
+        "7": {
+          "exact": 0.6209677419354839,
+          "byte": 0.9815188050270081,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 124,
+          "trained_on_this_length": true
+        },
+        "8": {
+          "exact": 0.42201834862385323,
+          "byte": 0.9613914489746094,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 109,
+          "trained_on_this_length": true
+        },
+        "9": {
+          "exact": 0.2625,
+          "byte": 0.9489583373069763,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 80,
+          "trained_on_this_length": true
+        },
+        "10": {
+          "exact": 0.16,
+          "byte": 0.9383333325386047,
+          "matched_filter_exact": 1.0,
+          "matched_filter_byte": 1.0,
+          "n": 25,
+          "trained_on_this_length": true
+        },
+        "11": {
+          "exact": 0.16666666666666666,
+          "byte": 0.8871527910232544,
+          "matched_filter_exact": 0.0,
+          "matched_filter_byte": 0.9090909090909091,
+          "n": 24,
+          "trained_on_this_length": true
+        },
+        "13": {
+          "exact": 0.0,
+          "byte": 0.7649572491645813,
+          "matched_filter_exact": 0.0,
+          "matched_filter_byte": 0.777120315581854,
+          "n": 39,
+          "trained_on_this_length": false
+        }
+      },
+      "lattice_growth": {
+        "16": 0.655,
+        "24": 0.65,
+        "32": 0.645,
+        "48": 0.62,
+        "64": 0.605
+      },
+      "regeneration": {
+        "none": 0.6525,
+        "wiped_at_step_2": 0.65,
+        "wiped_at_step_4": 0.65,
+        "wiped_at_step_8": 0.65125
+      }
+    }
+  },
+  "zero_parameter_decoder": {
+    "16": {
+      "exact": 1.0,
+      "params": 0,
+      "max_exactly_invertible_bytes": 16
+    },
+    "24": {
+      "exact": 1.0,
+      "params": 0,
+      "max_exactly_invertible_bytes": 24
+    },
+    "32": {
+      "exact": 1.0,
+      "params": 0,
+      "max_exactly_invertible_bytes": 32
+    }
+  },
+  "verdict": {
+    "answer_to_problem_5": "closed form, zero parameters",
+    "nca_justified": false,
+    "wellposed_matched_filter_exact": 1.0,
+    "wellposed_nca_exact": 0.7442622950819672,
+    "compressed_matched_filter_byte": 0.9910714285714286,
+    "compressed_nca_byte": 0.9768784046173096,
+    "note": "The NCA lost in both regimes. A matched filter is the optimal linear estimator under white noise and is exact when K >= L, so a learned decoder has nothing to add. Reported as a negative result; the NCA's damage tolerance and lattice-size freedom are real but buy nothing the closed form needs."
+  },
+  "wall_seconds": 1197.8
+}

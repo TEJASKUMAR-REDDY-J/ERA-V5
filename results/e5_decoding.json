@@ -1,0 +1,326 @@
+{
+  "n_tokens": 2000,
+  "params": 0,
+  "nca_baseline": {
+    "params": 628801,
+    "wellposed_K24": {
+      "matched_filter_exact": 1.0,
+      "nca_exact": 0.742
+    },
+    "compressed_K10": {
+      "matched_filter_byte": 0.991,
+      "nca_byte": 0.977
+    },
+    "verdict": "The learned decoder lost in every regime, including the underdetermined one built for it. With a uniform grid pinv IS a matched filter, which is the optimal estimator under additive white noise, so there was no error to correct. Removed."
+  },
+  "k_sweep": {
+    "8": {
+      "exact": 0.8715,
+      "byte": 0.951291711517761
+    },
+    "12": {
+      "exact": 0.996,
+      "byte": 0.9983853606027987
+    },
+    "16": {
+      "exact": 1.0,
+      "byte": 1.0
+    },
+    "24": {
+      "exact": 1.0,
+      "byte": 1.0
+    },
+    "32": {
+      "exact": 1.0,
+      "byte": 1.0
+    },
+    "48": {
+      "exact": 1.0,
+      "byte": 1.0
+    }
+  },
+  "by_length": {
+    "1": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "2": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "3": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "4": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "5": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "6": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "7": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "8": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "9": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "10": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "11": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "12": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "13": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "14": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "15": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "16": {
+      "exact": 1.0,
+      "byte": 1.0,
+      "n": 120,
+      "k_ge_l": true
+    },
+    "17": {
+      "exact": 0.38333333333333336,
+      "byte": 0.9465686274509804,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "18": {
+      "exact": 0.20833333333333334,
+      "byte": 0.9074074074074074,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "19": {
+      "exact": 0.08333333333333333,
+      "byte": 0.8723684210526316,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "20": {
+      "exact": 0.025,
+      "byte": 0.8325,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "21": {
+      "exact": 0.03333333333333333,
+      "byte": 0.7956349206349206,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "22": {
+      "exact": 0.0,
+      "byte": 0.7575757575757576,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "23": {
+      "exact": 0.0,
+      "byte": 0.7326086956521739,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "24": {
+      "exact": 0.0,
+      "byte": 0.7013888888888888,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "25": {
+      "exact": 0.0,
+      "byte": 0.655,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "26": {
+      "exact": 0.0,
+      "byte": 0.6538461538461539,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "27": {
+      "exact": 0.0,
+      "byte": 0.6327160493827161,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "28": {
+      "exact": 0.0,
+      "byte": 0.6133928571428572,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "29": {
+      "exact": 0.0,
+      "byte": 0.5732758620689655,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "30": {
+      "exact": 0.0,
+      "byte": 0.5675,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "31": {
+      "exact": 0.0,
+      "byte": 0.5532258064516129,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "32": {
+      "exact": 0.0,
+      "byte": 0.5450520833333333,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "33": {
+      "exact": 0.0,
+      "byte": 0.5116161616161616,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "34": {
+      "exact": 0.0,
+      "byte": 0.5026960784313725,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "35": {
+      "exact": 0.0,
+      "byte": 0.5,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "36": {
+      "exact": 0.0,
+      "byte": 0.47800925925925924,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "37": {
+      "exact": 0.0,
+      "byte": 0.48558558558558557,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "38": {
+      "exact": 0.0,
+      "byte": 0.46885964912280703,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "39": {
+      "exact": 0.0,
+      "byte": 0.46773504273504274,
+      "n": 120,
+      "k_ge_l": false
+    },
+    "40": {
+      "exact": 0.0,
+      "byte": 0.46125,
+      "n": 120,
+      "k_ge_l": false
+    }
+  },
+  "noise": {
+    "0.0": {
+      "exact": 1.0,
+      "byte": 1.0
+    },
+    "0.01": {
+      "exact": 1.0,
+      "byte": 1.0
+    },
+    "0.03": {
+      "exact": 1.0,
+      "byte": 1.0
+    },
+    "0.1": {
+      "exact": 1.0,
+      "byte": 1.0
+    },
+    "0.3": {
+      "exact": 0.965,
+      "byte": 0.9969888587774767
+    }
+  },
+  "structured_noise": {
+    "int8_quantisation": {
+      "exact": 1.0,
+      "byte": 1.0
+    },
+    "low_rank_residual_r8": {
+      "exact": 1.0,
+      "byte": 1.0
+    },
+    "low_rank_residual_r2": {
+      "exact": 1.0,
+      "byte": 1.0
+    }
+  },
+  "head_comparison": {
+    "softmax_head_params_131k_vocab_4096_dmodel": 536870912,
+    "firefly_decoder_params": 0,
+    "length_inference_exact": true
+  },
+  "wall_seconds": 25.9
+}

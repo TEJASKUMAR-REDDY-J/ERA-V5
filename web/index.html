@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FIREFLY — Fourier Interference Representations for Embedding Fields</title>
+<style>
+:root{
+  --bg:#0b0d12; --panel:#12151f; --panel2:#171b28; --line:#232838;
+  --fg:#e6e9ef; --dim:#8d95ab; --cyan:#4cc9f0; --violet:#7c5cff;
+  --red:#ff6b6b; --green:#24b36b; --amber:#f0a24c;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+a{color:var(--cyan)}
+h1,h2,h3{line-height:1.2;margin:0}
+code,.mono{font-family:var(--mono)}
+
+/* hero */
+header{padding:74px 0 54px;border-bottom:1px solid var(--line);
+  background:radial-gradient(900px 380px at 22% -12%,rgba(124,92,255,.20),transparent 62%),
+             radial-gradient(760px 320px at 88% 0%,rgba(76,201,240,.13),transparent 60%)}
+.tag{font-family:var(--mono);font-size:12px;letter-spacing:.20em;color:var(--cyan);
+  text-transform:uppercase;margin-bottom:16px}
+h1{font-size:clamp(38px,7vw,72px);font-weight:800;letter-spacing:-.03em}
+h1 .g{background:linear-gradient(100deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--dim);font-size:19px;max-width:670px;margin-top:18px}
+.by{margin-top:26px;font-family:var(--mono);font-size:13px;color:var(--dim)}
+.by b{color:var(--fg);font-weight:600}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px}
+.pill{font-family:var(--mono);font-size:11.5px;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--panel);color:var(--dim)}
+.pill.on{border-color:var(--cyan);color:var(--cyan)}
+
+/* structure */
+section{padding:58px 0;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--violet);margin-bottom:12px}
+h2{font-size:30px;font-weight:700;letter-spacing:-.02em}
+.lede{color:var(--dim);margin-top:14px;max-width:760px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:22px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.eq{font-family:var(--mono);font-size:14.5px;background:var(--panel2);
+  border:1px solid var(--line);border-left:3px solid var(--cyan);
+  border-radius:8px;padding:16px 18px;margin:18px 0;overflow-x:auto;white-space:pre}
+.note{font-size:13.5px;color:var(--dim);border-left:2px solid var(--line);padding-left:14px;margin-top:14px}
+
+/* controls */
+input[type=text],input[type=number],select{
+  background:var(--panel2);border:1px solid var(--line);color:var(--fg);
+  border-radius:9px;padding:10px 13px;font-family:var(--mono);font-size:15px;width:100%}
+input:focus,select:focus{outline:none;border-color:var(--cyan)}
+label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+input[type=range]{width:100%;accent-color:var(--cyan)}
+canvas{width:100%;display:block;border-radius:10px;background:var(--panel2)}
+
+/* metrics + tables */
+.kpi{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:16px}
+.kpi .n{font-family:var(--mono);font-size:26px;font-weight:700}
+.kpi .l{font-size:12px;color:var(--dim);margin-top:5px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim)}
+td.mono{font-family:var(--mono)}
+.win{color:var(--green);font-weight:600}
+.lose{color:var(--red);font-weight:600}
+.tie{color:var(--amber);font-weight:600}
+.tblwrap{overflow-x:auto}
+figure{margin:22px 0 0}
+figure img{width:100%;border-radius:11px;border:1px solid var(--line);background:var(--panel2)}
+figcaption{font-size:12.5px;color:var(--dim);margin-top:9px}
+footer{padding:46px 0 70px;color:var(--dim);font-size:13px}
+ul{color:var(--dim)} li{margin:7px 0}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:10px}
+.sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="tag">Kronecker Embeddings V2 · Problem 4</div>
+    <h1>FIRE<span class="g">FLY</span></h1>
+    <div class="sub"><b>F</b>ourier <b>I</b>nterference <b>R</b>epresentations for
+      <b>E</b>mbedding <b>F</b>ields of any <b>L</b>ength or dimensionalit<b>Y</b> — a frozen, parameter-free
+      embedding in which a token is a <em>signal</em>, not a symbol.</div>
+    <div class="pills">
+      <span class="pill on">P4 · Fourier</span>
+      <span class="pill on">P1 · mathematics</span>
+      <span class="pill on">P3 · dynamic length</span>
+      <span class="pill on">P5 · invertible</span>
+      <span class="pill">P2 · multimodal</span>
+    </div>
+    <div class="by">Tejaskumar Reddy J &nbsp;·&nbsp; ERA V5</div>
+  </div>
+</header>
+
+<section><div class="wrap">
+  <div class="eyebrow">The thesis</div>
+  <h2>Everything is a byte field. Embed its spectrum.</h2>
+  <p class="lede">Text, audio and images are all the same object — a field of byte
+  values over some index domain. Text and audio index a line; images index a plane.
+  The embedding is that field's Fourier transform, sampled on a <b>fixed</b>
+  frequency grid. Because the grid is chosen in advance, the code's width depends
+  on the grid alone, never on the data's length, resolution or dimensionality.</p>
+
+  <div class="eq">Kronecker (2605.29459)   κ[c,p] = (1/√L)·1[b_p = c]              256 × 32  = 8192
+FIREFLY                   Φ[c,k] = (1/√L)· Σ  exp(−i·ω_k·p)         256 × 16 × 2 = 8192
+                                        p: b_p=c</div>
+
+  <p class="lede">Same byte axis. Same output width. The only change is the basis on
+  the <em>position</em> axis: a delta basis becomes a Fourier basis. Everything below
+  follows from that one substitution.</p>
+
+  <div class="note">Named for the firefly because both reasons <em>are</em> the method: a
+  firefly's <b>species is its flash frequency</b> — identity carried as a temporal
+  frequency signature — and fireflies <b>synchronise by phase coupling</b>, thousands of
+  local oscillators summing into global order. That is the encoder, and it is the
+  numeric block. The coprime moduli are a Chinese-Remainder-Theorem choice, not an
+  entomological one.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">Problem 4 · interactive</div>
+  <h2>Each character is a wave. A word is their sum.</h2>
+  <p class="lede">Every occurrence of a byte at position <code>p</code> contributes the
+  wave <code>cos(ω·p)</code>. Faint lines are individual characters; the bold line is
+  their sum. The code is that sum <em>sampled</em> at the 16 fixed dots — which is why
+  the width never changes, however long the word gets.</p>
+
+  <div class="card">
+    <div class="grid g2">
+      <div><label>word</label><input type="text" id="w1" value="firefly" spellcheck="false"></div>
+      <div><label>byte channel to show</label><select id="ch1"></select></div>
+    </div>
+    <canvas id="cv1" height="290" style="margin-top:18px"></canvas>
+    <div class="legend">
+      <span><span class="sw" style="background:#3b4560"></span>one character</span>
+      <span><span class="sw" style="background:var(--cyan)"></span>their sum = the spectrum</span>
+      <span><span class="sw" style="background:var(--violet)"></span>the 16 sampled frequencies</span>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">Problem 3 · interactive</div>
+  <h2>Insert one byte and the delta basis falls off a cliff.</h2>
+  <p class="lede">The source paper names this in its own limitations: shifting bytes
+  "reduc[es] cosine more sharply." Under a delta basis a shift relocates every spike
+  to a coordinate that did not exist before. Under a Fourier basis the same shift is
+  a <b>phase rotation</b> — and the magnitude spectrum does not move at all.</p>
+
+  <div class="card">
+    <div class="grid g2">
+      <div><label>word</label><input type="text" id="w2" value="run" spellcheck="false"></div>
+      <div><label>bytes inserted at the front: <span id="dlab" class="mono">1</span></label>
+        <input type="range" id="d2" min="0" max="8" value="1"></div>
+    </div>
+    <div class="grid g3" style="margin-top:18px">
+      <div class="kpi"><div class="n" id="kk" style="color:var(--red)">—</div>
+        <div class="l">Kronecker · delta basis</div></div>
+      <div class="kpi"><div class="n" id="kp" style="color:var(--violet)">—</div>
+        <div class="l">FIREFLY · phase</div></div>
+      <div class="kpi"><div class="n" id="km" style="color:var(--cyan)">—</div>
+        <div class="l">FIREFLY · magnitude</div></div>
+    </div>
+    <canvas id="cv2" height="210" style="margin-top:18px"></canvas>
+    <div class="note" id="n2"></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">Problem 1 · interactive</div>
+  <h2>9 + 9 <em>is</em> 18, in the embedding, with no model.</h2>
+  <p class="lede">Encode an integer as its phase against ten coprime periods. Multiply
+  two embeddings elementwise and every phase adds — so each coordinate holds the
+  residue of the sum. The Chinese Remainder Theorem reads the integer back out,
+  exactly, for results below 6,469,693,230.</p>
+
+  <div class="eq">z_m(n) = exp(2πi·n / P_m)          z(a) ⊙ z(b) = z(a+b)
+u_m(n) = exp(2πi·ind_g(n) / (P_m−1))   u(a) ⊙ u(b) = u(a·b)
+P = (2, 3, 5, 7, 11, 13, 17, 19, 23, 29)      40 real dimensions in total</div>
+
+  <div class="card">
+    <div class="grid g3">
+      <div><label>a</label><input type="number" id="na" value="9"></div>
+      <div><label>operation</label><select id="op"><option value="+">+ &nbsp;(phase adds)</option><option value="*">× &nbsp;(discrete log adds)</option></select></div>
+      <div><label>b</label><input type="number" id="nb" value="9"></div>
+    </div>
+    <canvas id="cv3" height="182" style="margin-top:18px"></canvas>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="kpi"><div class="n mono" id="res" style="color:var(--cyan)">—</div>
+        <div class="l">decoded from the composed embedding, by CRT</div></div>
+      <div class="kpi"><div class="n mono" id="chk">—</div>
+        <div class="l">exactness check against real arithmetic</div></div>
+    </div>
+    <div class="note">There are <b>no carries</b>. Residues against coprime moduli are
+    independent, so 999999 + 1 costs exactly what 1 + 1 costs. Carry propagation is
+    the mechanism that breaks digit-tokenised length generalisation, and this
+    representation does not have it.</div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">Results</div>
+  <h2>What the experiments actually found</h2>
+  <p class="lede">Including the parts that went against us. Every number here is read
+  from <code>results/*.json</code>, produced by <code>python run_all.py</code>.</p>
+  <div id="results">Loading…</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">Failure modes</div>
+  <h2>When this will not work</h2>
+  <p class="lede">Every row is measured, not guessed. <b style="color:var(--red)">Silent</b>
+  means it fails without raising &mdash; the dangerous kind.</p>
+
+  <div class="card">
+    <h3 style="font-size:17px">Encoder</h3>
+    <div class="tblwrap"><table>
+      <tr><th>case</th><th>what happens</th><th></th></tr>
+      <tr><td>patch smaller than 2&times; the spatial modes</td>
+        <td class="mono" style="font-size:12px">ValueError: exceeds Nyquist</td>
+        <td class="win">loud</td></tr>
+      <tr><td>non-band-limited images (edges, noise, texture)</td>
+        <td>resolution invariance degrades &mdash; it is a band-limited property</td>
+        <td class="lose">silent</td></tr>
+      <tr><td>wrong value basis for the data</td>
+        <td>delta basis on pixels &rarr; resolution cosine <b>0.65</b> instead of 0.995</td>
+        <td class="lose">silent</td></tr>
+      <tr><td>suffix-heavy morphology</td>
+        <td><b>loses to Kronecker</b>, 0.706 vs 0.800 at 3 suffix bytes</td>
+        <td class="lose">silent</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:17px">Zero-parameter decoder</h3>
+    <div class="tblwrap"><table>
+      <tr><th>case</th><th>what happens</th><th></th></tr>
+      <tr><td><b>token longer than K bytes</b></td>
+        <td class="mono">K=16 &rarr; L=16: 100% &middot; L=17: 38% &middot; L=20: 3% &middot; L=24: 0%</td>
+        <td class="lose">silent</td></tr>
+      <tr><td>grid without &omega;=0</td><td>length inference breaks &mdash; it reads the DC bin</td>
+        <td class="lose">silent</td></tr>
+      <tr><td>corruption past ~&sigma;=0.3</td>
+        <td>96.5% and falling. int8 quantisation and low-rank residuals are fine (100%)</td>
+        <td class="lose">silent</td></tr>
+      <tr><td>weight tying with the output head</td>
+        <td>impossible, D=8192 &ne; d_model &mdash; the same limitation Kronecker has</td>
+        <td class="tie">known</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:17px">Numeric block</h3>
+    <div class="tblwrap"><table>
+      <tr><th>case</th><th>what happens</th><th></th></tr>
+      <tr><td>result &ge; 7,420,738,134,810</td>
+        <td class="mono">(M&minus;1) + 5 &rarr; 4</td><td class="lose">wraps silently</td></tr>
+      <tr><td>negative results</td>
+        <td class="mono">4 &minus; 9 &rarr; 7420738134805</td><td class="lose">silent</td></tr>
+      <tr><td>non-integers</td><td class="mono">3.7 &rarr; 3</td><td class="lose">silent</td></tr>
+      <tr><td>numbers still embedded in text</td>
+        <td>assumes an integer was already parsed out; raw digit strings do not trigger it</td>
+        <td class="lose">silent</td></tr>
+      <tr><td>asking a model to <em>learn</em> to use it</td>
+        <td>per-head residue accuracy 0.977 &rarr; 0.397 &rarr; 0.273 from 1 to 3 digits</td>
+        <td class="lose">silent</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:17px">Claims that do not hold</h3>
+    <div class="tblwrap"><table>
+      <tr><th>claim</th><th>status</th></tr>
+      <tr><td>shift invariance as a Fourier-only property</td>
+        <td class="lose">retracted &mdash; a linear map on &kappa; reaches R&sup2;=0.93 and keeps it</td></tr>
+      <tr><td>|&Phi;| distinguishes byte order</td>
+        <td class="lose">false with no repeated byte &mdash; <span class="mono">abc</span> vs
+        <span class="mono">cba</span> scores 1.000, identical to a byte histogram</td></tr>
+      <tr><td>better LM loss than Kronecker</td>
+        <td class="tie">no &mdash; ties, and &Phi; = &kappa;&middot;F says it must</td></tr>
+      <tr><td>length generalisation on arithmetic</td>
+        <td class="lose">no &mdash; nothing generalises past the trained digit count, in any
+        input &times; output combination</td></tr>
+    </table></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">Honesty</div>
+  <h2>The caveat we publish first</h2>
+  <p class="lede">For tokens of at most 32 bytes, <code>Φ = κ·F</code> for a fixed
+  full-rank matrix <code>F</code>. A learned projection can absorb <code>F</code>
+  entirely, so on short-token text the two codecs carry <b>identical information</b>
+  and must tie. We pre-registered that tie rather than hoping for a win.</p>
+  <p class="lede">That equivalence is also the map to where the real gains are: every
+  one of them lives where <code>F</code> does not apply.</p>
+  <div class="tblwrap"><table>
+    <tr><th>Gain</th><th>Absorbable by the projection?</th></tr>
+    <tr><td>tokens longer than 32 bytes</td><td class="win">No — information destroyed, not re-parameterised</td></tr>
+    <tr><td>magnitude features (shift invariance)</td><td class="win">No — nonlinear, the projection is linear</td></tr>
+    <tr><td>2-D and continuous index domains</td><td class="win">No — a delta basis has no such notion</td></tr>
+    <tr><td>resolution invariance → shared projection</td><td class="win">No — delta grid scales with resolution</td></tr>
+    <tr><td>the numeric block</td><td class="win">No — new dimensions, nonlinear in token identity</td></tr>
+    <tr><td>short-token English LM loss</td><td class="tie">Yes — and it ties, as predicted</td></tr>
+  </table></div>
+</div></section>
+
+<footer><div class="wrap">
+  <b>FIREFLY</b> · Tejaskumar Reddy J · ERA V5 — Kronecker Embeddings V2.<br>
+  Built on <a href="https://arxiv.org/html/2605.29459v1">Kronecker Embeddings</a> ·
+  <a href="https://lightninglm.theschoolofai.in/">LightningLM</a>. Related:
+  <a href="https://arxiv.org/abs/2502.09741">FoNE</a>,
+  <a href="https://arxiv.org/pdf/2405.17399">Abacus</a>,
+  <a href="https://arxiv.org/abs/2401.06291">FourierDiff-NCA</a>.
+</div></footer>
+
+<script>
+// ---------------------------------------------------------------- encoder
+const K=16, NCH=256;
+function freqs(k=K,pmin=2,pmax=64){const o=[];for(let i=0;i<k;i++){
+  const per=pmax*Math.pow(pmin/pmax,i/(k-1));o.push(2*Math.PI/per);}return o;}
+const W=freqs();
+function bytesOf(s){return Array.from(new TextEncoder().encode(s));}
+
+// Phi[c][k] complex, flattened per channel
+function encode(str,w=W){
+  const b=bytesOf(str),L=b.length||1;
+  const re=Array.from({length:NCH},()=>new Float64Array(w.length));
+  const im=Array.from({length:NCH},()=>new Float64Array(w.length));
+  b.forEach((c,p)=>{for(let k=0;k<w.length;k++){
+    re[c][k]+=Math.cos(w[k]*p); im[c][k]-=Math.sin(w[k]*p);}});
+  const s=1/Math.sqrt(L);
+  for(let c=0;c<NCH;c++)for(let k=0;k<w.length;k++){re[c][k]*=s;im[c][k]*=s;}
+  return {re,im};
+}
+function flat(code,mag){const o=[];
+  for(let c=0;c<NCH;c++)for(let k=0;k<K;k++){
+    if(mag) o.push(Math.hypot(code.re[c][k],code.im[c][k]));
+    else {o.push(code.re[c][k]);o.push(code.im[c][k]);}}
+  return o;}
+function kron(str,dp=32){const b=bytesOf(str),L=b.length||1,v=new Float64Array(NCH*dp);
+  for(let p=0;p<Math.min(b.length,dp);p++) v[b[p]*dp+p]=1/Math.sqrt(L);
+  return Array.from(v);}
+function cos(a,b){let d=0,na=0,nb=0;
+  for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}
+  return (na<1e-12||nb<1e-12)?0:d/Math.sqrt(na*nb);}
+
+// ---------------------------------------------------------------- CRT block
+const PRIMES=[2,3,5,7,11,13,17,19,23,29];
+const MOD=PRIMES.reduce((a,b)=>a*b,1);
+function egcd(a,b){if(!b)return[a,1,0];const[g,x,y]=egcd(b,a%b);return[g,y,x-Math.floor(a/b)*y];}
+function inv(a,m){const[,x]=egcd(((a%m)+m)%m,m);return((x%m)+m)%m;}
+function crt(res){let t=0;for(let i=0;i<PRIMES.length;i++){
+  const m=PRIMES[i],Mi=MOD/m;t+=res[i]*Mi*inv(Mi%m,m);}return((t%MOD)+MOD)%MOD;}
+function primRoot(p){if(p===2)return 1;const f=[];let n=p-1;
+  for(let d=2;d*d<=n;d++){while(n%d===0){if(!f.includes(d))f.push(d);n/=d;}}
+  if(n>1&&!f.includes(n))f.push(n);
+  for(let g=2;g<p;g++){if(f.every(q=>modpow(g,(p-1)/q,p)!==1))return g;}return 1;}
+function modpow(b,e,m){let r=1;b%=m;while(e>0){if(e&1)r=r*b%m;b=b*b%m;e>>=1;}return r;}
+const IND={},POW={};
+PRIMES.forEach(p=>{const g=primRoot(p);IND[p]={};POW[p]={};
+  for(let e=0;e<p-1;e++){const a=modpow(g,e,p);POW[p][e]=a;if(!(a in IND[p]))IND[p][a]=e;}});
+
+function addEnc(n){return PRIMES.map(p=>{const r=((n%p)+p)%p;
+  return{re:Math.cos(2*Math.PI*r/p),im:Math.sin(2*Math.PI*r/p),p,res:r,def:true};});}
+function mulEnc(n){return PRIMES.map(p=>{const r=((n%p)+p)%p;
+  if(r===0)return{re:0,im:0,p,res:0,def:false};
+  const a=2*Math.PI*IND[p][r]/(p-1);
+  return{re:Math.cos(a),im:Math.sin(a),p,res:r,def:true};});}
+function compose(A,B){return A.map((a,i)=>({re:a.re*B[i].re-a.im*B[i].im,
+  im:a.re*B[i].im+a.im*B[i].re,p:a.p,def:a.def&&B[i].def}));}
+function addDec(Z){return crt(Z.map(z=>{const p=z.p;
+  return((Math.round(Math.atan2(z.im,z.re)/(2*Math.PI)*p)%p)+p)%p;}));}
+function mulDec(Z){return crt(Z.map(z=>{const p=z.p;
+  if(Math.hypot(z.re,z.im)<1e-9)return 0;
+  const e=((Math.round(Math.atan2(z.im,z.re)/(2*Math.PI)*(p-1))%(p-1))+(p-1))%(p-1);
+  return POW[p][e];}));}
+
+// ---------------------------------------------------------------- canvas util
+function fit(cv){const r=window.devicePixelRatio||1,w=cv.clientWidth,h=+cv.height;
+  cv.width=w*r;cv.height=h*r;const g=cv.getContext('2d');g.setTransform(r,0,0,r,0,0);
+  g.clearRect(0,0,w,h);return[g,w,h];}
+const CY='#4cc9f0',VI='#7c5cff',RD='#ff6b6b',DIM='#8d95ab',FAINT='#3b4560';
+
+// ------------------------------------------------- viz 1: characters as waves
+const w1=document.getElementById('w1'),ch1=document.getElementById('ch1');
+function draw1(){
+  const s=w1.value||' ', b=bytesOf(s);
+  const uniq=[...new Set(b)];
+  const prev=+ch1.value;
+  ch1.innerHTML=uniq.map(c=>`<option value="${c}">${JSON.stringify(String.fromCharCode(c))} · byte ${c}</option>`).join('');
+  if(uniq.includes(prev)) ch1.value=prev;
+  const c=+ch1.value||uniq[0];
+  const [g,w,h]=fit(document.getElementById('cv1'));
+  const pad=34, x0=pad, x1=w-12, y0=18, y1=h-26, ym=(y0+y1)/2;
+  const positions=[];b.forEach((v,p)=>{if(v===c)positions.push(p);});
+  const amp=(y1-y0)/2/Math.max(1,Math.sqrt(positions.length))*0.9;
+  g.strokeStyle='#232838';g.lineWidth=1;
+  g.beginPath();g.moveTo(x0,ym);g.lineTo(x1,ym);g.stroke();
+  const N=420, wmax=Math.PI;
+  // individual character waves
+  g.lineWidth=1.4;
+  positions.forEach(p=>{g.strokeStyle=FAINT;g.beginPath();
+    for(let i=0;i<=N;i++){const om=wmax*i/N, x=x0+(x1-x0)*i/N,
+      y=ym-amp*Math.cos(om*p);i?g.lineTo(x,y):g.moveTo(x,y);}g.stroke();});
+  // the sum
+  g.strokeStyle=CY;g.lineWidth=2.4;g.beginPath();
+  for(let i=0;i<=N;i++){const om=wmax*i/N;let acc=0;
+    positions.forEach(p=>acc+=Math.cos(om*p));
+    const x=x0+(x1-x0)*i/N, y=ym-amp*acc/Math.max(1,Math.sqrt(positions.length));
+    i?g.lineTo(x,y):g.moveTo(x,y);}
+  g.stroke();
+  // sampled frequencies
+  W.forEach(om=>{let acc=0;positions.forEach(p=>acc+=Math.cos(om*p));
+    const x=x0+(x1-x0)*om/wmax, y=ym-amp*acc/Math.max(1,Math.sqrt(positions.length));
+    g.fillStyle=VI;g.beginPath();g.arc(x,y,3.6,0,7);g.fill();
+    g.strokeStyle='rgba(124,92,255,.3)';g.lineWidth=1;
+    g.beginPath();g.moveTo(x,ym);g.lineTo(x,y);g.stroke();});
+  g.fillStyle=DIM;g.font='11px ui-monospace,monospace';
+  g.fillText('ω = 0',x0,h-8); g.fillText('ω = π  (Nyquist)',x1-96,h-8);
+  g.fillText(`byte ${c} occurs at position${positions.length===1?'':'s'} ${positions.join(', ')||'—'}`,x0,12);
+}
+w1.addEventListener('input',draw1);ch1.addEventListener('change',draw1);
+
+// ------------------------------------------------- viz 2: the insertion cliff
+const w2=document.getElementById('w2'),d2=document.getElementById('d2');
+function draw2(){
+  const s=w2.value||'a', d=+d2.value;
+  document.getElementById('dlab').textContent=d;
+  const shifted=''.repeat(d)+s;
+  const kk=cos(kron(s),kron(shifted));
+  const kp=cos(flat(encode(s),false),flat(encode(shifted),false));
+  const km=cos(flat(encode(s),true),flat(encode(shifted),true));
+  document.getElementById('kk').textContent=kk.toFixed(3);
+  document.getElementById('kp').textContent=kp.toFixed(3);
+  document.getElementById('km').textContent=km.toFixed(3);
+  document.getElementById('n2').innerHTML=
+    `<code>${JSON.stringify(s)}</code> vs <code>${JSON.stringify('_'.repeat(d)+s)}</code> — `+
+    (d===0?'identical strings.':
+     `the delta basis retains <b style="color:var(--red)">${(kk*100).toFixed(1)}%</b> of the similarity; `+
+     `the Fourier magnitude retains <b style="color:var(--cyan)">${(km*100).toFixed(1)}%</b>.`);
+  const [g,w,h]=fit(document.getElementById('cv2'));
+  const pad=42,x0=pad,x1=w-14,y0=16,y1=h-28;
+  const series=[[RD,'Kronecker',v=>cos(kron(s),kron(''.repeat(v)+s))],
+                [VI,'FIREFLY phase',v=>cos(flat(encode(s),false),flat(encode(''.repeat(v)+s),false))],
+                [CY,'FIREFLY magnitude',v=>cos(flat(encode(s),true),flat(encode(''.repeat(v)+s),true))]];
+  g.strokeStyle='#232838';g.lineWidth=1;
+  [0,.25,.5,.75,1].forEach(t=>{const y=y1-(y1-y0)*t;g.beginPath();g.moveTo(x0,y);g.lineTo(x1,y);g.stroke();
+    g.fillStyle=DIM;g.font='10px ui-monospace,monospace';g.fillText(t.toFixed(2),6,y+3);});
+  const MX=8;
+  series.forEach(([col,,fn])=>{g.strokeStyle=col;g.lineWidth=2.2;g.beginPath();
+    for(let v=0;v<=MX;v++){const x=x0+(x1-x0)*v/MX,y=y1-(y1-y0)*Math.max(0,fn(v));
+      v?g.lineTo(x,y):g.moveTo(x,y);}g.stroke();
+    for(let v=0;v<=MX;v++){const x=x0+(x1-x0)*v/MX,y=y1-(y1-y0)*Math.max(0,fn(v));
+      g.fillStyle=col;g.beginPath();g.arc(x,y,v===d?4.6:2.6,0,7);g.fill();}});
+  g.fillStyle=DIM;g.font='11px ui-monospace,monospace';
+  g.fillText('bytes inserted →',x0,h-8);
+}
+w2.addEventListener('input',draw2);d2.addEventListener('input',draw2);
+
+// ------------------------------------------------- viz 3: the arithmetic dials
+const na=document.getElementById('na'),nb=document.getElementById('nb'),op=document.getElementById('op');
+function draw3(){
+  const a=Math.max(0,Math.floor(+na.value||0)), b=Math.max(0,Math.floor(+nb.value||0));
+  const isAdd=op.value==='+';
+  const A=isAdd?addEnc(a):mulEnc(a), B=isAdd?addEnc(b):mulEnc(b), C=compose(A,B);
+  const got=isAdd?addDec(C):mulDec(C), want=isAdd?a+b:a*b;
+  document.getElementById('res').textContent=got.toLocaleString();
+  const ok=got===((want%MOD)+MOD)%MOD;
+  const el=document.getElementById('chk');
+  el.textContent=ok?`exact — ${a} ${isAdd?'+':'×'} ${b} = ${want.toLocaleString()}`:`out of range (>${MOD.toLocaleString()})`;
+  el.style.color=ok?'var(--green)':'var(--amber)';
+  el.style.fontSize='15px';
+  const [g,w,h]=fit(document.getElementById('cv3'));
+  const n=PRIMES.length, cw=w/n, R=Math.min(cw*0.34,32), cy=h/2-6;
+  PRIMES.forEach((p,i)=>{
+    const cx=cw*(i+0.5);
+    g.strokeStyle='#232838';g.lineWidth=1.4;
+    g.beginPath();g.arc(cx,cy,R,0,7);g.stroke();
+    const dial=(z,col,lw,scale)=>{const m=Math.hypot(z.re,z.im);
+      if(m<1e-9){g.fillStyle=RD;g.beginPath();g.arc(cx,cy,3,0,7);g.fill();return;}
+      const ang=Math.atan2(z.im,z.re);
+      g.strokeStyle=col;g.lineWidth=lw;g.beginPath();g.moveTo(cx,cy);
+      g.lineTo(cx+R*scale*Math.cos(ang),cy-R*scale*Math.sin(ang));g.stroke();};
+    dial(A[i],FAINT,2,0.92); dial(B[i],DIM,2,0.72); dial(C[i],CY,2.8,1.0);
+    g.fillStyle=DIM;g.font='10px ui-monospace,monospace';g.textAlign='center';
+    g.fillText('P='+p,cx,cy+R+15);
+    g.fillStyle=CY;g.fillText('r='+(isAdd?((a+b)%p):((a*b)%p)),cx,cy+R+27);
+    g.textAlign='left';});
+  g.fillStyle=DIM;g.font='11px ui-monospace,monospace';
+  g.fillText('faint = a   ·   grey = b   ·   cyan = a ⊙ b   (elementwise complex product)',10,13);
+}
+[na,nb,op].forEach(e=>e.addEventListener('input',draw3));
+
+// ---------------------------------------------------------------- results
+function pct(x){return (x==null||isNaN(x))?'—':(100*x).toFixed(1)+'%';}
+function f3(x,n){return (x==null||isNaN(x))?'—':(+x).toFixed(n==null?3:n);}
+fetch('data.json').then(r=>r.json()).then(D=>{
+  const el=document.getElementById('results'); let html='';
+
+  if(D.e1){const ins=D.e1.insertion, r=D.e1.prefixed_form_retrieval_median_rank;
+    html+=`<div class="card"><h3>E1 · geometry, no training</h3>
+    <div class="tblwrap"><table>
+      <tr><th>probe</th><th>Kronecker</th><th>FIREFLY phase</th><th>FIREFLY magnitude</th></tr>
+      <tr><td>cosine after 1 byte inserted</td><td class="mono">${f3(ins['1'].kronecker)}</td>
+        <td class="mono">${f3(ins['1'].firefly_phase)}</td><td class="mono">${f3(ins['1'].firefly_magnitude)}</td></tr>
+      <tr><td>median rank of the prefixed form</td><td class="mono">${f3(r.kronecker,0)}</td>
+        <td class="mono">${f3(r.firefly_phase,0)}</td><td class="mono">${f3(r.firefly_magnitude,0)}</td></tr>
+      <tr><td>cosine after 3 substitutions</td><td class="mono">${f3(D.e1.substitution['3'].kronecker)}</td>
+        <td class="mono">${f3(D.e1.substitution['3'].firefly_phase)}</td>
+        <td class="mono">${f3(D.e1.substitution['3'].firefly_magnitude)}</td></tr>
+      <tr><td>cosine after 3 suffix bytes <span class="lose">(loss)</span></td>
+        <td class="mono">${f3(D.e1.suffix['3'].kronecker)}</td>
+        <td class="mono">${f3(D.e1.suffix['3'].firefly_phase)}</td>
+        <td class="mono">${f3(D.e1.suffix['3'].firefly_magnitude)}</td></tr>
+    </table></div>`;
+    if(D.e1.magnitude_from_kronecker_linear_r2!=null){
+      const sh=D.e1.magnitude_reconstruction_under_shift||{};
+      html+=`<div class="note" style="border-left-color:var(--red)">
+      <b style="color:var(--red)">Retracted claim.</b> I said no linear projection could
+      manufacture the magnitude feature from the Kronecker code. Fitting κ → |Φ| reaches
+      R² <b>${f3(D.e1.magnitude_from_kronecker_linear_r2,4)}</b> (phase control
+      ${f3(D.e1.phase_from_kronecker_linear_r2,4)}), and the reconstruction <b>keeps</b> the
+      invariance: ${Object.keys(sh).filter(d=>d!=='0').map(d=>`d=${d}: ${f3(sh[d].linear_reconstruction)}
+      (true ${f3(sh[d].true_magnitude)})`).join(', ')}.<br><br>
+      Reason: |Φ[c,:]| is the magnitude of a sum of unit phasors, one per occurrence of byte c.
+      One occurrence ⇒ magnitude 1 whatever the position — so with no repeated byte,
+      <b>|Φ| <em>is</em> the byte histogram</b>, which a linear map reads off κ directly.</div>
+      <div class="tblwrap"><table><tr><th>pair</th><th>|Φ| cosine</th><th>byte histogram</th><th></th></tr>
+      ${(D.e1.magnitude_is_mostly_a_histogram||[]).map(x=>`<tr><td class="mono">${x.a} vs ${x.b}</td>
+        <td class="mono">${f3(x.magnitude_cos)}</td><td class="mono">${f3(x.histogram_cos)}</td>
+        <td>${x.has_repeats?'<span class="win">differs</span>':'<span class="lose">identical</span>'}</td></tr>`).join('')}
+      </table></div>`;}
+    html+=`<figure><img src="e1_geometry.png" alt="geometry"></figure></div>`;}
+
+  if(D.e2){const dg=D.e2.test_digits, hi=D.e2.train_digits[1];
+    const tbl=op=>`<div class="tblwrap"><table><tr><th>${op==='+'?'addition':'multiplication'}</th>
+      ${dg.map(d=>`<th>${d}d</th>`).join('')}</tr>
+      ${Object.keys(D.e2.ops[op]).map(arm=>{const a=D.e2.ops[op][arm].accuracy_by_digits;
+        return `<tr><td class="mono" style="font-size:12px">${arm}</td>`+dg.map(d=>{
+          const v=a[String(d)], cls=d>hi?(v>0.5?'win':v<0.2?'lose':'tie'):'';
+          return `<td class="mono ${cls}">${pct(v)}</td>`;}).join('')+'</tr>';}).join('')}
+    </table></div>`;
+    html+=`<div class="card"><h3>E2 · arithmetic: input × output space</h3>
+    <p style="color:var(--dim);font-size:14px">Trained on ${D.e2.train_digits[0]}–${hi} digit
+    operands; columns past ${hi} were never seen.</p>${tbl('+')}${tbl('*')}
+    <div class="note"><b>Two hypotheses, both refuted.</b> I first blamed the digit readout
+    and swapped it for residue heads + CRT (zero parameters). That did not rescue it either —
+    nothing generalises past 3 digits in any cell of the grid.</div>
+    <figure><img src="e2_arithmetic.png" alt="arithmetic"></figure>`;
+    if(D.e2b){const bd=D.e2b.by_digits;
+      html+=`<h3 style="margin-top:26px">E2b · which explanation is right?</h3>
+      <p style="color:var(--dim);font-size:14px">CRT needs all 12 residues simultaneously
+      correct, so per-head accuracy <span class="mono">p</span> gives exact accuracy
+      <span class="mono">p¹²</span>. Is the failure that compounding, or can the heads simply
+      not read residues? The two have opposite implications.</p>
+      <div class="tblwrap"><table>
+        <tr><th>operand digits</th><th>mean per-head</th><th>worst head</th><th>p¹²</th><th>exact integer</th></tr>
+        ${Object.keys(bd).sort((a,b)=>a-b).map(d=>`<tr><td class="mono">${d}</td>
+          <td class="mono">${f3(bd[d].mean_per_head)}</td>
+          <td class="mono">${f3(bd[d].min_per_head)}</td>
+          <td class="mono">${f3(bd[d].product_of_heads,4)}</td>
+          <td class="mono">${f3(bd[d].exact_integer,4)}</td></tr>`).join('')}
+      </table></div>
+      <div class="note" style="border-left-color:var(--red)"><b style="color:var(--red)">The heads
+      cannot read residues.</b> Per-head accuracy collapses from 0.977 at one digit to 0.397 at
+      two — not compounding, but the model failing to learn modular addition at all, the same
+      difficulty the grokking literature documents. So neither the input representation nor the
+      output format is the binding constraint: a 3-layer model trained for 2500 steps cannot
+      exploit the structure even when handed it exactly.</div>
+      <figure><img src="e2b_residue_diagnostic.png" alt="residue diagnostic"></figure>`;}
+    html+=`</div>`;}
+
+  if(D.e3){const A=D.e3.arms, gap=D.e3.firefly_minus_kronecker;
+    html+=`<div class="card"><h3>E3 · text LM control — a tie was predicted</h3>
+    <div class="tblwrap"><table><tr><th>arm</th><th>val loss</th><th>input-side params</th></tr>
+      ${Object.keys(A).map(a=>`<tr><td class="mono">${a}</td>
+        <td class="mono">${f3(A[a].mean_val_loss)} ± ${f3(A[a].std_val_loss)}</td>
+        <td class="mono">${A[a].input_side_trainable_params.toLocaleString()}</td></tr>`).join('')}
+    </table></div>
+    <div class="note">FIREFLY − Kronecker = <b>${gap>=0?'+':''}${f3(gap,4)}</b> nats, seed noise
+    ${f3(D.e3.seed_noise,4)}. The comparison could have detected the 0.083-nat effect the source
+    paper reports; it measures something 7× smaller.</div>
+    <figure><img src="e3_textlm.png" alt="lm"></figure></div>`;}
+
+  if(D.e4){const pv=D.e4.phase_vs_magnitude||{}, mods=Object.keys(D.e4.code_dims);
+    const gaps=(D.e4.codes&&D.e4.codes.full)?D.e4.codes.full.shared_vs_private_gap:{};
+    html+=`<div class="card"><h3>E4 · one operator, one width, three modalities</h3>
+    <div class="tblwrap"><table>
+      <tr><th>modality</th><th>width</th><th>budget split</th><th>phase</th><th>phase+magnitude</th><th>cost of sharing W</th></tr>
+      ${mods.map(m=>`<tr><td class="mono">${m}</td><td class="mono">${D.e4.code_dims[m]}</td>
+        <td class="mono" style="font-size:12px">${D.e4.budget_split[m]}</td>
+        <td class="mono">${pct((pv[m]||{}).phase_only)}</td>
+        <td class="mono">${pct((pv[m]||{}).phase_plus_magnitude)}</td>
+        <td class="mono">${gaps[m]==null?'—':(gaps[m]>=0?'+':'')+gaps[m].toFixed(3)}</td></tr>`).join('')}
+    </table></div>`;
+    if(D.e4.real_image_resolution){html+=`<div class="tblwrap"><table>
+      <tr><th>resolution invariance, real MNIST</th><th>mean cosine</th><th>worst case</th></tr>
+      ${Object.keys(D.e4.real_image_resolution).map(k=>{const v=D.e4.real_image_resolution[k];
+        return `<tr><td class="mono">${k}</td><td class="mono win">${f3(v.mean_cosine,4)}</td>
+        <td class="mono">${f3(v.min_cosine,4)}</td></tr>`;}).join('')}</table></div>`;}
+    html+=`<div class="note">Audio is weak in absolute terms — a standard MFCC pipeline would
+    beat it comfortably. The claim being tested is that one shared projection serves all three,
+    not that this is a good audio model.</div>
+    <figure><img src="e4_multimodal.png" alt="multimodal"></figure></div>`;}
+
+  if(D.e5){const ks=D.e5.k_sweep, bl=D.e5.by_length||{}, nb=D.e5.nca_baseline||{};
+    const cliff=[8,16,17,20,24,32,40].filter(k=>bl[k]);
+    html+=`<div class="card"><h3>E5 · decoding with no output vocabulary</h3>
+    <p style="color:var(--dim);font-size:14px"><b style="color:var(--fg)">Zero parameters.</b>
+    Length comes from the code's own DC bin, so there is no side channel either.</p>
+    <div class="tblwrap"><table><tr><th>K</th><th>exact round trip</th><th>byte</th><th>params</th></tr>
+      ${Object.keys(ks).map(k=>`<tr><td class="mono">${k}</td><td class="mono win">${pct(ks[k].exact)}</td>
+      <td class="mono">${pct(ks[k].byte)}</td><td class="mono">0</td></tr>`).join('')}</table></div>
+    <div class="tblwrap"><table><tr><th>token bytes (K=16)</th>${cliff.map(k=>`<th>${k}</th>`).join('')}</tr>
+      <tr><td>exact</td>${cliff.map(k=>`<td class="mono ${bl[k].k_ge_l?'win':'lose'}">${pct(bl[k].exact)}</td>`).join('')}</tr>
+    </table></div>
+    <div class="note">The K ≥ L condition is real and sharp. Measured on real text spans,
+    because BPE tokens never get long enough to reach the cliff.</div>
+    <div class="tblwrap"><table><tr><th>the learned decoder that lost (${(nb.params||0).toLocaleString()} params)</th>
+      <th>closed form</th><th>NCA</th></tr>
+      <tr><td>well posed, K=24</td><td class="mono win">${f3((nb.wellposed_K24||{}).matched_filter_exact)}</td>
+        <td class="mono">${f3((nb.wellposed_K24||{}).nca_exact)}</td></tr>
+      <tr><td>compressed, K=10</td><td class="mono win">${f3((nb.compressed_K10||{}).matched_filter_byte)}</td>
+        <td class="mono">${f3((nb.compressed_K10||{}).nca_byte)}</td></tr>
+    </table></div><div class="note">${nb.verdict||''}</div>
+    <figure><img src="e5_decoding.png" alt="decoding"></figure></div>`;}
+
+  el.innerHTML=html||'<div class="card">Run <code>python run_all.py</code>.</div>';
+}).catch(()=>{document.getElementById('results').innerHTML=
+  '<div class="card">Run <code>python run_all.py</code>, then <code>python web/build_web.py</code>.</div>';});
+
+[draw1,draw2,draw3].forEach(f=>f());
+addEventListener('resize',()=>[draw1,draw2,draw3].forEach(f=>f()));
+</script>
+</body>
+</html>

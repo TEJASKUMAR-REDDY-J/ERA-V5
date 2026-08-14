@@ -1,0 +1,219 @@
+{
+  "train_digits": [
+    1,
+    3
+  ],
+  "test_digits": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "n_train": 30000,
+  "steps": 2000,
+  "primes": [
+    2,
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37
+  ],
+  "modulus": 7420738134810,
+  "ops": {
+    "+": {
+      "digit->digits": {
+        "accuracy_by_digits": {
+          "1": 1.0,
+          "2": 0.763,
+          "3": 0.313,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 341280,
+        "seconds": 169.7,
+        "input": "digit",
+        "output": "digits"
+      },
+      "abacus->digits": {
+        "accuracy_by_digits": {
+          "1": 0.466,
+          "2": 0.56,
+          "3": 0.252,
+          "4": 0.003,
+          "5": 0.0
+        },
+        "params": 341280,
+        "seconds": 176.7,
+        "input": "abacus",
+        "output": "digits"
+      },
+      "firefly->digits": {
+        "accuracy_by_digits": {
+          "1": 0.852,
+          "2": 0.022,
+          "3": 0.002,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 350496,
+        "seconds": 164.3,
+        "input": "firefly",
+        "output": "digits"
+      },
+      "firefly+op->digits": {
+        "accuracy_by_digits": {
+          "1": 1.0,
+          "2": 1.0,
+          "3": 0.784,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 350496,
+        "seconds": 161.4,
+        "input": "firefly+op",
+        "output": "digits"
+      },
+      "digit->residues": {
+        "accuracy_by_digits": {
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 360389,
+        "seconds": 96.7,
+        "input": "digit",
+        "output": "residues"
+      },
+      "firefly->residues": {
+        "accuracy_by_digits": {
+          "1": 0.666,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 369605,
+        "seconds": 81.2,
+        "input": "firefly",
+        "output": "residues"
+      },
+      "firefly+op->residues": {
+        "accuracy_by_digits": {
+          "1": 1.0,
+          "2": 0.854,
+          "3": 0.15,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 369605,
+        "seconds": 110.1,
+        "input": "firefly+op",
+        "output": "residues"
+      }
+    },
+    "*": {
+      "digit->digits": {
+        "accuracy_by_digits": {
+          "1": 0.924,
+          "2": 0.043,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 341280,
+        "seconds": 221.4,
+        "input": "digit",
+        "output": "digits"
+      },
+      "abacus->digits": {
+        "accuracy_by_digits": {
+          "1": 0.679,
+          "2": 0.015,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 341280,
+        "seconds": 305.1,
+        "input": "abacus",
+        "output": "digits"
+      },
+      "firefly->digits": {
+        "accuracy_by_digits": {
+          "1": 0.793,
+          "2": 0.001,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 350496,
+        "seconds": 174.8,
+        "input": "firefly",
+        "output": "digits"
+      },
+      "firefly+op->digits": {
+        "accuracy_by_digits": {
+          "1": 1.0,
+          "2": 0.004,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 350496,
+        "seconds": 168.0,
+        "input": "firefly+op",
+        "output": "digits"
+      },
+      "digit->residues": {
+        "accuracy_by_digits": {
+          "1": 0.03,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 360389,
+        "seconds": 106.0,
+        "input": "digit",
+        "output": "residues"
+      },
+      "firefly->residues": {
+        "accuracy_by_digits": {
+          "1": 0.905,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0
+        },
+        "params": 369605,
+        "seconds": 75.4,
+        "input": "firefly",
+        "output": "residues"
+      },
+      "firefly+op->residues": {
+        "accuracy_by_digits": {
+          "1": 1.0,
+          "2": 0.027,
+          "3": 0.0,
+          "4": 0.006,
+          "5": 0.001
+        },
+        "params": 369605,
+        "seconds": 84.0,
+        "input": "firefly+op",
+        "output": "residues"
+      }
+    }
+  },
+  "readout_is_the_bottleneck": false
+}

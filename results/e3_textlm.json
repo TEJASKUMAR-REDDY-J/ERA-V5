@@ -1,0 +1,248 @@
+{
+  "vocab": 8192,
+  "seq": 96,
+  "steps": 900,
+  "seeds": [
+    0,
+    1
+  ],
+  "d_model": 160,
+  "n_layer": 3,
+  "prediction": "tie between kronecker and firefly (Phi = kappa @ F)",
+  "arms": {
+    "learned": {
+      "runs": [
+        {
+          "final_val_loss": 6.14927101880312,
+          "curve": [
+            {
+              "step": 0,
+              "val_loss": 8.861953735351562
+            },
+            {
+              "step": 150,
+              "val_loss": 6.795166850090027
+            },
+            {
+              "step": 300,
+              "val_loss": 6.478914459546407
+            },
+            {
+              "step": 450,
+              "val_loss": 6.301284889380137
+            },
+            {
+              "step": 600,
+              "val_loss": 6.205106019973755
+            },
+            {
+              "step": 750,
+              "val_loss": 6.166243354479472
+            },
+            {
+              "step": 899,
+              "val_loss": 6.158654431502025
+            }
+          ],
+          "input_side_trainable_params": 1310720,
+          "seconds": 326.8
+        },
+        {
+          "final_val_loss": 6.143215291202068,
+          "curve": [
+            {
+              "step": 0,
+              "val_loss": 8.90233059724172
+            },
+            {
+              "step": 150,
+              "val_loss": 6.778477331002553
+            },
+            {
+              "step": 300,
+              "val_loss": 6.448354880015056
+            },
+            {
+              "step": 450,
+              "val_loss": 6.293052474657695
+            },
+            {
+              "step": 600,
+              "val_loss": 6.203618288040161
+            },
+            {
+              "step": 750,
+              "val_loss": 6.16246501604716
+            },
+            {
+              "step": 899,
+              "val_loss": 6.154185771942139
+            }
+          ],
+          "input_side_trainable_params": 1310720,
+          "seconds": 407.6
+        }
+      ],
+      "mean_val_loss": 6.146243155002594,
+      "std_val_loss": 0.0030278638005256653,
+      "input_side_trainable_params": 1310720
+    },
+    "kronecker": {
+      "runs": [
+        {
+          "final_val_loss": 6.125126950442791,
+          "curve": [
+            {
+              "step": 0,
+              "val_loss": 8.995617190996805
+            },
+            {
+              "step": 150,
+              "val_loss": 6.692403276761373
+            },
+            {
+              "step": 300,
+              "val_loss": 6.377623677253723
+            },
+            {
+              "step": 450,
+              "val_loss": 6.243415276209514
+            },
+            {
+              "step": 600,
+              "val_loss": 6.1681845386823015
+            },
+            {
+              "step": 750,
+              "val_loss": 6.139171143372853
+            },
+            {
+              "step": 899,
+              "val_loss": 6.133868197600047
+            }
+          ],
+          "input_side_trainable_params": 1310720,
+          "seconds": 9434.7
+        },
+        {
+          "final_val_loss": 6.133307345211506,
+          "curve": [
+            {
+              "step": 0,
+              "val_loss": 8.971213499704996
+            },
+            {
+              "step": 150,
+              "val_loss": 6.687715987364451
+            },
+            {
+              "step": 300,
+              "val_loss": 6.3817231853803
+            },
+            {
+              "step": 450,
+              "val_loss": 6.2501028180122375
+            },
+            {
+              "step": 600,
+              "val_loss": 6.18258798122406
+            },
+            {
+              "step": 750,
+              "val_loss": 6.149952272574107
+            },
+            {
+              "step": 899,
+              "val_loss": 6.143495400746663
+            }
+          ],
+          "input_side_trainable_params": 1310720,
+          "seconds": 544.1
+        }
+      ],
+      "mean_val_loss": 6.129217147827148,
+      "std_val_loss": 0.004090197384357452,
+      "input_side_trainable_params": 1310720
+    },
+    "firefly": {
+      "runs": [
+        {
+          "final_val_loss": 6.115704327821732,
+          "curve": [
+            {
+              "step": 0,
+              "val_loss": 8.965165615081787
+            },
+            {
+              "step": 150,
+              "val_loss": 6.598998745282491
+            },
+            {
+              "step": 300,
+              "val_loss": 6.352166334788005
+            },
+            {
+              "step": 450,
+              "val_loss": 6.232749064763387
+            },
+            {
+              "step": 600,
+              "val_loss": 6.1597017248471575
+            },
+            {
+              "step": 750,
+              "val_loss": 6.130460202693939
+            },
+            {
+              "step": 899,
+              "val_loss": 6.124623775482178
+            }
+          ],
+          "input_side_trainable_params": 1310720,
+          "seconds": 666.6
+        },
+        {
+          "final_val_loss": 6.1201626136898994,
+          "curve": [
+            {
+              "step": 0,
+              "val_loss": 8.958493034044901
+            },
+            {
+              "step": 150,
+              "val_loss": 6.598290681838989
+            },
+            {
+              "step": 300,
+              "val_loss": 6.350465873877208
+            },
+            {
+              "step": 450,
+              "val_loss": 6.2313205401102705
+            },
+            {
+              "step": 600,
+              "val_loss": 6.168441951274872
+            },
+            {
+              "step": 750,
+              "val_loss": 6.1355680624643965
+            },
+            {
+              "step": 899,
+              "val_loss": 6.129466652870178
+            }
+          ],
+          "input_side_trainable_params": 1310720,
+          "seconds": 527.8
+        }
+      ],
+      "mean_val_loss": 6.1179334707558155,
+      "std_val_loss": 0.0022291429340839386,
+      "input_side_trainable_params": 1310720
+    }
+  },
+  "firefly_minus_kronecker": -0.011283677071332932,
+  "seed_noise": 0.004658196310116277,
+  "tie_confirmed": true
+}
